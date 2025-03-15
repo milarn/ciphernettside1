@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="no-NO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-drift — Cipher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F5A28C; /* Oransj */
+            --primary-dark: #E07E68; /* Mørkere oransj */
+            --primary-light: #FFCEBF; /* Lysere oransj */
+            --secondary: #212338; /* Mørkeblå - primærfarge */
+            --secondary-dark: #171828; /* Mørkere blå */
+            --secondary-light: #353756; /* Lysere blå */
+            --secondary-lighter: #404466; /* Enda lysere blå */
+            --dark: #171721;
+            --light: #F8F9FA;
+            --gray: #6c757d;
+            --light-gray: #F2F2F2;
+            --white: #FFFFFF;
+            --gradient-blue: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-orange: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --background: #2A2C44; /* Lysere bakgrunn enn original */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .big-paragraph {
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 4px 14px rgba(245, 162, 140, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 162, 140, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-light);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(21, 23, 38, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(21, 23, 38, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rounded-corners {
+            border-radius: 20px;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .z-index-10 {
+            z-index: 10;
+        }
+        
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(42, 44, 68, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(42, 44, 68, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 35px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .header-cta {
+            margin-left: 30px;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--secondary);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 5;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--secondary-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item.active {
+            color: var(--primary);
+            background-color: rgba(245, 162, 140, 0.1);
+        }
+        
+        /* Hero Section */
+        .page-hero {
+            padding: 180px 0 100px;
+            position: relative;
+            background-color: var(--background);
+            color: var(--white);
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(245, 162, 140, 0.2), transparent 60%);
+            z-index: 1;
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+        }
+
+        /* Intro Section */
+        .intro-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .intro-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .intro-content h2 .highlight {
+            position: relative;
+            z-index: 1;
+            color: var(--primary);
+        }
+        
+        .intro-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .intro-img-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .intro-img-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            background: var(--gradient-orange);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .intro-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: all 0.3s ease;
+        }
+        
+        .intro-img:hover {
+            transform: perspective(1000px) rotateY(0);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 100px 0;
+            background-color: var(--background);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .services-section::before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .services-header {
+            grid-column: span 12;
+            max-width: 700px;
+            margin-bottom: 50px;
+        }
+        
+        .services-header h2 {
+            margin-bottom: 20px;
+        }
+        
+        .service-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .service-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-orange);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-light);
+        }
+        
+        .service-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .service-item.large {
+            grid-column: span 8;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .service-item.medium {
+            grid-column: span 4;
+        }
+        
+        .service-item.small {
+            grid-column: span 4;
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: rgba(245, 162, 140, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+        
+        .service-item.large .service-icon {
+            margin-bottom: 0;
+        }
+        
+        .service-item:hover .service-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+        
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        
+        .service-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.05rem;
+        }
+
+        /* Why Choose Us Section */
+        .features-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .features-heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .features-heading h2 {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .features-heading h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .features-heading .section-subtitle {
+            color: var(--primary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .features-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-box {
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-orange);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-box:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 30px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-box:hover .feature-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+        
+        .feature-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .feature-content p {
+            color: var(--secondary-light);
+            font-size: 1rem;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 100px 0;
+            background-color: var(--background);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .team-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .team-image {
+            position: relative;
+        }
+        
+        .team-image img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .team-image::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: -30px;
+            bottom: -30px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            z-index: -1;
+        }
+        
+        .team-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+        
+        .team-content h3 span {
+            color: var(--primary);
+        }
+        
+        .team-content p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contact-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--secondary);
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-info p {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .contact-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .contact-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .contact-form {
+            background-color: var(--light-gray);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(33, 35, 56, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 162, 140, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 35px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* Float Animation for Service Items */
+        .animation-float {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.5s;
+        }
+        
+        .delay-2 {
+            animation-delay: 1s;
+        }
+        
+        .delay-3 {
+            animation-delay: 1.5s;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .page-title {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .intro-grid,
+            .team-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .service-item.large {
+                grid-column: span 6;
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .service-item.large .service-icon {
+                margin: 0 auto 25px;
+            }
+            
+            .service-item.medium,
+            .service-item.small {
+                grid-column: span 3;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--secondary);
+                flex-direction: column;
+                transition: all 0.4s ease;
+                padding: 40px;
+                z-index: 99;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-item {
+                margin: 0 0 20px;
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 10px 0;
+                font-size: 1.1rem;
+            }
+            
+            .header-cta {
+                margin: 20px 0 0;
+                width: 100%;
+            }
+            
+            .header-cta .btn {
+                width: 100%;
+            }
+            
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background-color: transparent;
+                padding: 0;
+                margin-top: 10px;
+                display: none;
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+            
+            .dropdown-item {
+                padding-left: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .page-hero {
+                padding: 120px 0 80px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns:1fr;
+            }
+            
+            .service-item.large,
+            .service-item.medium,
+            .service-item.small {
+                grid-column: span 1;
+            }
+            
+            .features-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .team-image::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="/">
+                    <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/79f2d4d9-d33f-46de-852e-30bb245fb615/Cipher-logo-negativ+%283%29.png" alt="Cipher Logo">
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Hjem</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link active">Våre tjenester</a>
+                        <div class="dropdown-content">
+                            <a href="/it-drift" class="dropdown-item active">IT-drift</a>
+                            <a href="/sikkerhetstjenester" class="dropdown-item">Sikkerhetstjenester</a>
+                            <a href="/skytjenester" class="dropdown-item">Skytjenester</a>
+                            <a href="/innsiktoganalyse" class="dropdown-item">Innsikt og analyse</a>
+                            <a href="/strategisk-it-radgivning" class="dropdown-item">Strategisk IT-rådgivning</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/om-cipher" class="nav-link">Om oss</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/kontakt" class="nav-link">Kontakt</a>
+                    </li>
+                </ul>
+                <a href="/kontakt" class="btn btn-primary header-cta">Kontakt oss</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero" id="hero">
+            <div class="container">
+                <div class="page-hero-content">
+                    <h1 class="page-title">IT-drift</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section class="intro-section" id="intro">
+            <div class="container">
+                <div class="intro-grid">
+                    <div class="intro-content">
+                        <h2>IT som fungerer - <span class="highlight">alltid!</span></h2>
+                        <p>Cipher er opptatt av at teknologien skal jobbe for deg, ikke motsatt. Vi leverer tjenester innen drift, vedlikehold og overvåking av dine IT-løsninger.</p>
+                        <p>Med kompetente medarbeidere, moderne verktøy og langsiktig perspektiv sikrer vi at din IT-infrastruktur alltid er i toppform – så du kan fokusere på kjernevirksomheten din.</p>
+                    </div>
+                    <div class="intro-img-container">
+                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/49dc74cf-a14d-4e5f-8a85-050c7936d5b0/Godprat+Dante+og+Kjell.jpg" alt="IT-drift team" class="intro-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is IT-Management Section -->
+        <section class="team-section">
+            <div class="container">
+                <div class="team-grid">
+                    <div class="team-image">
+                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/a7261fea-23da-4749-b554-27a08160e2d5/Whiteboard+Dante.jpg" alt="IT planning">
+                    </div>
+                    <div class="team-content">
+                        <h3>Hva er <span>IT-drift?</span></h3>
+                        <p>IT-drift handler om å holde systemene dine i gang, sikre at alt er oppdatert og beskytte deg mot trusler. Det betyr at vi overvåker, fikser feil og gir support når du trenger det.</p>
+                        <p>Kort sagt, vi passer på at IT-en din alltid er i toppform, slik at du slipper nedetid, sikkerhetsrisikoer og frustrerte ansatte.</p>
+                        <p>Med vår proaktive tilnærming identifiserer vi potensielle problemer før de oppstår, og våre eksperter er alltid beredt til å hjelpe når du trenger det.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section" id="tjenester">
+            <div class="container">
+                <div class="services-grid">
+                    <div class="services-header">
+                        <h2>Noe av det vi kan levere innen IT-drift</h2>
+                        <p>Vi tilbyr et bredt spekter av IT-driftstjenester for å sikre at din virksomhet fungerer optimalt.</p>
+                    </div>
+                    
+                    <div class="service-item large animation-float">
+                        <div class="service-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Overvåking og vedlikehold</h3>
+                            <p>Vi følger med på systemene dine døgnet rundt og sørger for at alt går som det skal. Hvis noe er i ferd med å gå galt, fikser vi det før det blir et problem. Våre avanserte overvåkingsverktøy oppdager potensielle problemer tidlig, slik at vi kan løse dem proaktivt og minimere risikoen for nedetid.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item medium animation-float delay-1">
+                        <div class="service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Support</h3>
+                            <p>Våre dyktige IT-konsulenter står alltid klar for å hjelpe dere om teknologien mot formodning skulle streike. Vi tilbyr support via telefon, e-post og fjerntilgang for rask problemløsning.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item medium animation-float delay-2">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Sikkerhet og back-up</h3>
+                            <p>Vi beskytter virksomheten din med brannmurer, antivirus og sikkerhetskopiering – så du slipper å miste viktige data. Våre sikkerhetsløsninger oppdateres kontinuerlig for å beskytte mot de nyeste truslene.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item small animation-float">
+                        <div class="service-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>On-prem og cloud serverdrift</h3>
+                            <p>Vi leverer stabile og skalerbare IT-løsninger, enten lokalt, i skyen eller som en hybrid løsning med høy ytelse og fleksibilitet.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item small animation-float delay-1">
+                        <div class="service-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Nettverk</h3>
+                            <p>Vi kan levere løsninger for nettverk og tar oss av driften av nettverksutstyret. Vi monitorerer utstyret og agerer på eventuelle problemer.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item small animation-float delay-2">
+                        <div class="service-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Utrulling og oppdatering</h3>
+                            <p>Vi håndterer installasjoner, oppgraderinger og oppdateringer av programvare og maskinvare for å holde systemene dine oppdaterte og sikre.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section (Why Choose Us) -->
+        <section class="features-section" id="fordeler">
+            <div class="container">
+                <div class="features-heading">
+                    <span class="section-subtitle">Hvorfor velge oss</span>
+                    <h2>Hvorfor skal dere velge oss som <span class="text-primary">IT-partner</span>?</h2>
+                    <p>Vi skiller oss ut med fokus på langsiktig verdi og proaktiv service</p>
+                </div>
+                
+                <div class="features-wrapper">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Hjelp når du trenger det</h4>
+                            <p>Våre IT-eksperter er bare en telefon eller e-post unna, og er alltid klar til å hjelpe.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Ting bare fungerer</h4>
+                            <p>Vi fikser problemer før du merker dem og holder systemene dine i optimal stand.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Økt sikkerhet</h4>
+                            <p>Vi beskytter dine data med de nyeste sikkerhetsløsningene mot dagens trusler.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Forutsigbare kostnader</h4>
+                            <p>Med faste avtaler slipper du uforutsette IT-utgifter og får bedre budsjettforutsigbarhet.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Langvarige relasjoner</h4>
+                            <p>Vi er her for å bygge langvarige relasjoner og virkelig skape verdi for kundene våre.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Vekst og skalering</h4>
+                            <p>Våre løsninger vokser med din bedrift og tilpasses dine skiftende behov.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="kontakt">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-content">
+                        <h2>Ønsker du hjelp med drift av dine IT-løsninger?</h2>
+                        <div class="contact-info">
+                            <p>hi@cipher.no</p>
+                            <p>+47 56 1234 65</p>
+                            <p>Nøstegaten 58, 5011 Bergen</p>
+                        </div>
+                        <div class="contact-social">
+                            <a href="https://www.instagram.com/ciphernorge/" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send oss en melding</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Fornavn" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Etternavn" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="E-post" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Hva kan vi hjelpe deg med?" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/79f2d4d9-d33f-46de-852e-30bb245fb615/Cipher-logo-negativ+%283%29.png" alt="Cipher Logo">
+                    </div>
+                    <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Tjenester</h5>
+                    <ul class="footer-links">
+                        <li><a href="/it-drift">IT-drift</a></li>
+                        <li><a href="/sikkerhetstjenester">Sikkerhetstjenester</a></li>
+                        <li><a href="/skytjenester">Skytjenester</a></li>
+                        <li><a href="/innsiktoganalyse">Innsikt og analyse</a></li>
+                        <li><a href="/strategisk-it-radgivning">Strategisk IT-rådgivning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Snarveier</h5>
+                    <ul class="footer-links">
+                        <li><a href="/">Hjem</a></li>
+                        <li><a href="/#tjenester">Tjenester</a></li>
+                        <li><a href="/om-cipher">Om oss</a></li>
+                        <li><a href="/kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Kontakt</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
+                        <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Cipher Norge AS. Alle rettigheter reservert.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Sticky Header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile Dropdown Toggle
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would typically send the form data to a server
+                // For now, we'll just simulate a success message
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message (you can customize this)
+                alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
+            });
+        }
+        
+        // Service items animation on scroll
+        function animateOnScroll() {
+            const serviceItems = document.querySelectorAll('.service-item');
+            const featureBoxes = document.querySelectorAll('.feature-box');
+            
+            const elementInView = (el, scrollOffset = 0) => {
+                const elementTop = el.getBoundingClientRect().top;
+                return elementTop <= window.innerHeight - scrollOffset;
+            }
+            
+            serviceItems.forEach(item => {
+                if (elementInView(item, 150)) {
+                    item.classList.add('animation-float');
+                }
+            });
+            
+            featureBoxes.forEach((box, index) => {
+                if (elementInView(box, 150)) {
+                    setTimeout(() => {
+                        box.style.transform = 'translateY(0)';
+                        box.style.opacity = '1';
+                    }, index * 100);
+                }
+            });
+        }
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            // Set initial styles for feature boxes
+            document.querySelectorAll('.feature-box').forEach(box => {
+                box.style.transform = 'translateY(30px)';
+                box.style.opacity = '0';
+                box.style.transition = 'all 0.6s ease';
+            });
+            
+            // Trigger animations on load
+            animateOnScroll();
+        });
+        
+        // Trigger animations on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

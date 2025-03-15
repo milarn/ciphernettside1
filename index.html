@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="no-NO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipher | Teknologi som skaper verdi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F5A28C; /* Oransj */
+            --primary-dark: #E07E68; /* Mørkere oransj */
+            --primary-light: #FFCEBF; /* Lysere oransj */
+            --secondary: #212338; /* Mørkeblå - primærfarge */
+            --secondary-dark: #171828; /* Mørkere blå */
+            --secondary-light: #353756; /* Lysere blå */
+            --secondary-lighter: #404466; /* Enda lysere blå */
+            --dark: #171721;
+            --light: #F8F9FA;
+            --gray: #6c757d;
+            --light-gray: #F2F2F2;
+            --white: #FFFFFF;
+            --gradient-blue: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-orange: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --background: #2A2C44; /* Lysere bakgrunn enn original */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Digital particles animation */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+    
+        .particle {
+            position: absolute;
+            display: block;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .big-paragraph {
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 4px 14px rgba(245, 162, 140, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 162, 140, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-light);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(21, 23, 38, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(21, 23, 38, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rounded-corners {
+            border-radius: 20px;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .z-index-10 {
+            z-index: 10;
+        }
+        
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(42, 44, 68, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(42, 44, 68, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 35px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .header-cta {
+            margin-left: 30px;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* Animated decoration */
+        .animated-shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape1 {
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            bottom: -150px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.05);
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--background);
+            color: var(--white);
+        }
+        
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+            max-width: 90%;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .hero-image {
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: all 0.3s ease;
+        }
+        
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(0) rotateX(0);
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .service-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .service-badge {
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-badge:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            z-index: 2;
+            color: var(--secondary);
+        }
+        
+        .section-heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-subtitle {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .section-description {
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+            color: rgba(33, 35, 56, 0.8);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--secondary-light);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            color: var(--white);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: var(--primary);
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background-color: rgba(245, 162, 140, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            background-color: var(--primary);
+            color: var(--secondary);
+            transform: rotateY(180deg);
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        
+        .service-description {
+            margin-bottom: 20px;
+            color: rgba(255,255,255,0.8);
+            flex-grow: 1;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--background);
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: -30px;
+            bottom: -30px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            z-index: -1;
+        }
+        
+        .about-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+        
+        .about-content h3 span {
+            color: var(--primary);
+        }
+        
+        .about-content p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Why Choose Us / Code Section */
+        .why-us {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            z-index: 2;
+            color: var(--secondary);
+        }
+
+        .why-us-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .why-us-subtitle {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .why-us-content {
+            max-width: 540px;
+        }
+
+        .why-us-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+        }
+
+        .why-us-content h3 span {
+            color: var(--primary);
+        }
+        
+        .why-us-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: rgba(33, 35, 56, 0.9);
+        }
+
+        /* Improved Code Block Display */
+        .code-container {
+            background-color: var(--secondary-dark);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            height: auto;
+            min-height: 400px;
+            font-family: 'Courier New', monospace;
+            color: var(--light);
+            line-height: 1.5;
+        }
+
+        .code-header {
+            color: var(--primary-light);
+            margin-bottom: 15px;
+        }
+
+        .code-line {
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInCode 0.5s forwards;
+            white-space: pre-wrap;
+        }
+
+        .code-comment {
+            color: var(--primary-light);
+        }
+
+        .code-keyword {
+            color: var(--primary);
+        }
+
+        .code-string {
+            color: #98C379;
+        }
+
+        .code-function {
+            color: #61AFEF;
+        }
+
+        .code-variable {
+            color: #E06C75;
+        }
+
+        .code-value {
+            color: #D19A66;
+        }
+
+        @keyframes fadeInCode {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            background-color: var(--secondary-dark);
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+        }
+        
+        .cta-container {
+            background: var(--secondary);
+            border-radius: 20px;
+            padding: 50px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 60%);
+            z-index: -1;
+        }
+        
+        .cta-content {
+            max-width: 600px;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        
+        .cta-description {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+            color: var(--secondary);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--secondary);
+            position: relative;
+        }
+        
+        .contact-info h3::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .contact-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(245, 162, 140, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            background-color: var(--primary);
+            color: var(--secondary);
+            transform: rotateY(180deg);
+        }
+        
+        .contact-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .contact-details p {
+            color: rgba(33, 35, 56, 0.7);
+            font-size: 1rem;
+        }
+        
+        .contact-form {
+            background-color: var(--light-gray);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(33, 35, 56, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--secondary);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 162, 140, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 35px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1, .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-container,
+            .about-grid,
+            .contact-grid,
+            .why-us-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-content,
+            .about-content,
+            .why-us-content {
+                margin: 0 auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .service-badges {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                margin-top: 50px;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .about-image::after {
+                display: none;
+            }
+            
+            .about-content h3::after,
+            .contact-info h3::after,
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+
+            .code-container {
+                margin-top: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--secondary);
+                flex-direction: column;
+                transition: all 0.4s ease;
+                padding: 40px;
+                z-index: 99;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-item {
+                margin: 0 0 20px;
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 10px 0;
+                font-size: 1.1rem;
+            }
+            
+            .header-cta {
+                margin: 20px 0 0;
+                width: 100%;
+            }
+            
+            .header-cta .btn {
+                width: 100%;
+            }
+            
+            .hero {
+                padding: 120px 0 80px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-heading {
+                margin-bottom: 40px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .animated-shape {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                  <li class="nav-item"><a href="index.html" class="nav-link">Hjem</a></li>
+                  <li class="nav-item"><a href="om.html" class="nav-link">Om oss</a></li>
+                  <li class="nav-item"><a href="it-drift.html" class="nav-link">IT-drift</a></li>
+                </ul>
+              </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="animated-shape shape1"></div>
+            <div class="animated-shape shape2"></div>
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Teknologi som <span class="text-primary">skaper verdi</span></h1>
+                    <p class="hero-subtitle">Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="hero-buttons">
+                        <a href="#tjenester" class="btn btn-primary">Se våre tjenester</a>
+                        <a href="#kontakt" class="btn btn-outline">Kontakt oss</a>
+                    </div>
+                    
+                    <!-- Service Tags -->
+                    <div class="service-badges">
+                        <a href="#it-drift" class="service-badge">IT-drift</a>
+                        <a href="#skytjenester" class="service-badge">Skytjenester</a>
+                        <a href="#sikkerhet" class="service-badge">Sikkerhetstjenester</a>
+                        <a href="#radgivning" class="service-badge">Strategisk IT-rådgivning</a>
+                        <a href="#innsikt" class="service-badge">Datainnsikt & analyse</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="bilder/Godsteming+Truls+og+Kristi.jpg" alt="Cipher team arbeider sammen">
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="tjenester">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="section-subtitle">Våre tjenester</span>
+                    <h2>Hva vi kan hjelpe deg med</h2>
+                    <p class="section-description">Vi tilbyr et bredt spekter av IT-tjenester for å hjelpe din virksomhet med å lykkes i den digitale verden.</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card" id="it-drift">
+                        <div class="service-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="service-title">IT-drift</h3>
+                        <p class="service-description">Vi tar hånd om IT-løsningene dine. Du trenger ikke å bekymre deg for stabilitet, sikkerhet eller nedetid. Våre eksperter sørger for at alt tikker og går som det skal, slik at du kan fokusere på kjernevirksomheten din.</p>
+                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                    </div>
+                    
+                    <div class="service-card" id="skytjenester">
+                        <div class="service-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3 class="service-title">Skytjenester</h3>
+                        <p class="service-description">Vi leverer sikre og skalerbare skytjenester som gir virksomheten din økt fleksibilitet og reduserte kostnader. Våre løsninger er alltid oppdaterte, tilgjengelige og enkle å skalere etter behov.</p>
+                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                    </div>
+                    
+                    <div class="service-card" id="sikkerhet">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="service-title">Sikkerhetstjenester</h3>
+                        <p class="service-description">Vi tilbyr sikkerhetstjenester som kombinerer robuste tekniske løsninger med strategisk rådgivning. Våre eksperter hjelper deg med å identifisere risikoer, implementere effektive tiltak og bygge en helhetlig sikkerhetsstrategi.</p>
+                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                    </div>
+                    
+                    <div class="service-card" id="radgivning">
+                        <div class="service-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="service-title">Strategisk IT-rådgivning</h3>
+                        <p class="service-description">Vi leverer strategisk IT-rådgivning som hjelper deg å ta informerte teknologivalg. Våre eksperter bidrar til å forme en bærekraftig digital strategi som støtter vekst og innovasjon.</p>
+                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                    </div>
+                    
+                    <div class="service-card" id="innsikt">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="service-title">Datainnsikt og analyse</h3>
+                        <p class="service-description">Vi hjelper deg med å omdanne data til verdifull innsikt. Med våre tjenester får du verktøyene og ekspertisen du trenger for å ta bedre beslutninger, identifisere muligheter og drive virksomheten din fremover.</p>
+                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="about" id="om-oss">
+            <div class="particles-container" id="particles"></div>
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <img src="bilder/Gull+av+gråstein.png" alt="Cipher team">
+                    </div>
+                    <div class="about-content">
+                        <span class="section-subtitle">Om Cipher</span>
+                        <h3>Vi gjør teknologi <span>enkelt og verdifullt</span></h3>
+                        <p>Med en rådgivende og proaktiv tilnærming hjelper vi deg å bygge løsninger som ikke bare fungerer i dag, men som gir varig verdi for fremtiden. Sammen skaper vi løsninger som løfter bedriften din til nye høyder – alltid med dine behov i fokus.</p>
+                        <p>Hos oss handler det om å levere tjenester som gir merverdi. Velger du oss, kan du være trygg på at vi gjør alt vi kan for å sikre at du føler deg ivaretatt – ikke bare under oppdraget, men også i etterkant. Vi er her for å bygge langvarige relasjoner og skape verdi over tid – vi er nemlig <strong>#initforthelongrun!</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section with Code Animation -->
+        <section class="why-us" id="hvorfor-oss">
+            <div class="container">
+                <div class="why-us-heading">
+                    <span class="why-us-subtitle">Hvorfor velge Cipher?</span>
+                    <h2>Det beste fra to verdener</h2>
+                    <p class="section-description">Det finnes mange flinke konsulenter, men det er få som leverer «hele pakken». En bedrift består ikke av tekniske løsninger eller forretning alene. For å lykkes må du se dette i en helhet.</p>
+                </div>
+                
+                <div class="why-us-grid">
+                    <div class="why-us-content">
+                        <h3>Forvent et <span>utypisk konsulentfirma</span></h3>
+                        <p>Hvis du leier inn en Cipher eller Cipherinne, møter du ikke en dresskledd dame eller mann med stresskofferten under armen, masse fancy power points og TBF'er (to og tre bokstavsforkortelser red.anm.)</p>
+                        <p>Våre rådgivere har dønn solid faglig kompetanse, variert bakgrunn og relevant erfaring - de har rett og slett vært ute en vinternatt før! Vi vet hva som er lurt å gjøre og ikke minst hva som ikke er så lurt.</p>
+                        <p>I tillegg er vi engasjerte, ærlige, nysgjerrige og veldig morsomme å jobbe med!</p>
+                    </div>
+                    <div class="code-container">
+                        <div class="code-header">// Cipher's approach to delivering value</div>
+                        <div class="code-line" style="animation-delay: 0.1s"><span class="code-keyword">class</span> <span class="code-function">CipherApproach</span> {</div>
+                        <div class="code-line" style="animation-delay: 0.5s">  <span class="code-keyword">constructor</span>() {</div>
+                        <div class="code-line" style="animation-delay: 0.9s">    <span class="code-keyword">this</span>.<span class="code-variable">values</span> = [</div>
+                        <div class="code-line" style="animation-delay: 1.3s">      <span class="code-string">'Proaktiv tilnærming'</span>,</div>
+                        <div class="code-line" style="animation-delay: 1.7s">      <span class="code-string">'Solid faglig kompetanse'</span>,</div>
+                        <div class="code-line" style="animation-delay: 2.1s">      <span class="code-string">'Langsiktige relasjoner'</span>,</div>
+                        <div class="code-line" style="animation-delay: 2.5s">      <span class="code-string">'Engasjement og ærlighet'</span></div>
+                        <div class="code-line" style="animation-delay: 2.9s">    ];</div>
+                        <div class="code-line" style="animation-delay: 3.3s">    <span class="code-keyword">this</span>.<span class="code-variable">focus</span> = <span class="code-string">'Kundens behov'</span>;</div>
+                        <div class="code-line" style="animation-delay: 3.7s">  }</div>
+                        <div class="code-line" style="animation-delay: 4.1s">  </div>
+                        <div class="code-line" style="animation-delay: 4.5s">  <span class="code-function">deliverValue</span>(<span class="code-variable">client</span>) {</div>
+                        <div class="code-line" style="animation-delay: 4.9s">    <span class="code-keyword">const</span> <span class="code-variable">needs</span> = <span class="code-variable">client</span>.<span class="code-function">analyze</span>();</div>
+                        <div class="code-line" style="animation-delay: 5.3s">    <span class="code-keyword">const</span> <span class="code-variable">solution</span> = <span class="code-keyword">this</span>.<span class="code-function">createTailoredSolution</span>(<span class="code-variable">needs</span>);</div>
+                        <div class="code-line" style="animation-delay: 5.7s">    </div>
+                        <div class="code-line" style="animation-delay: 6.1s">    <span class="code-keyword">return</span> {</div>
+                        <div class="code-line" style="animation-delay: 6.5s">      <span class="code-variable">result</span>: <span class="code-string">"Varig verdi"</span>,</div>
+                        <div class="code-line" style="animation-delay: 6.9s">      <span class="code-variable">tagline</span>: <span class="code-string">"#initforthelongrun"</span></div>
+                        <div class="code-line" style="animation-delay: 7.3s">    };</div>
+                        <div class="code-line" style="animation-delay: 7.7s">  }</div>
+                        <div class="code-line" style="animation-delay: 8.1s">}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-container">
+                    <div class="cta-content">
+                        <h2 class="cta-title">Vi hjelper deg å knekke digitaliseringskoden</h2>
+                        <p class="cta-description">Ta kontakt med oss i dag for en uforpliktende samtale om hvordan vi kan hjelpe din virksomhet.</p>
+                        <a href="#kontakt" class="btn btn-primary">Kontakt oss nå</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="kontakt">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Ta kontakt med oss</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Vårt kontor</h4>
+                                <p>Nøstegaten 58, 5011 Bergen, Norge</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Telefon</h4>
+                                <p>+47 56 12 34 65</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>E-post</h4>
+                                <p>hi@cipher.no</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send oss en melding</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Navn</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-post</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Emne</label>
+                                <input type="text" id="subject" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label">Melding</label>
+                                <textarea id="message" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send melding</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                    </div>
+                    <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Tjenester</h5>
+                    <ul class="footer-links">
+                        <li><a href="#it-drift">IT-drift</a></li>
+                        <li><a href="#skytjenester">Skytjenester</a></li>
+                        <li><a href="#sikkerhet">Sikkerhetstjenester</a></li>
+                        <li><a href="#radgivning">Strategisk IT-rådgivning</a></li>
+                        <li><a href="#innsikt">Datainnsikt og analyse</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Snarveier</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home">Hjem</a></li>
+                        <li><a href="#tjenester">Tjenester</a></li>
+                        <li><a href="#om-oss">Om oss</a></li>
+                        <li><a href="#hvorfor-oss">Hvorfor velge oss</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Kontakt</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
+                        <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Cipher Norge AS. Alle rettigheter reservert.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Sticky Header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (!targetElement) return;
+                
+                // Close mobile menu if open
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+                
+                const headerHeight = document.getElementById('header').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Active Navigation Link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const headerHeight = document.getElementById('header').offsetHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - 100;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the form data to a server
+                // For now, we'll just simulate a success message
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message (you can customize this)
+                alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
+            });
+        }
+
+        // Reset code animation periodically
+        setInterval(() => {
+            document.querySelectorAll('.code-line').forEach(line => {
+                line.style.animation = 'none';
+                setTimeout(() => {
+                    line.style.animation = '';
+                }, 50);
+            });
+        }, 12000); // Restart animation every 12 seconds
+        
+        // Create particles for About section
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth > 768 ? 20 : 10;
+            
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 8 + 2; // 2-10px
+                const posX = Math.random() * 100; // 0-100%
+                const posY = Math.random() * 100; // 0-100%
+                const opacity = Math.random() * 0.3 + 0.1; // 0.1-0.4
+                const duration = Math.random() * 20 + 10; // 10-30s
+                const delay = Math.random() * 5; // 0-5s
+                
+                // Apply styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+                
+                // Add particle to container
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles
+        window.addEventListener('load', createParticles);
+        window.addEventListener('resize', createParticles);
+    </script>
+</body>
+</html>
