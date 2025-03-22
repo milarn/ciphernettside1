@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="no-NO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Monitorering & Logging — Cipher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F5A28C; /* Oransj */
+            --primary-dark: #E07E68; /* Mørkere oransj */
+            --primary-light: #FFCEBF; /* Lysere oransj */
+            --secondary: #212338; /* Mørkeblå - primærfarge */
+            --secondary-dark: #171828; /* Mørkere blå */
+            --secondary-light: #353756; /* Lysere blå */
+            --secondary-lighter: #404466; /* Enda lysere blå */
+            --dark: #171721;
+            --light: #F8F9FA;
+            --gray: #6c757d;
+            --light-gray: #F2F2F2;
+            --white: #FFFFFF;
+            --gradient-blue: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-orange: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --background: #2A2C44; /* Lysere bakgrunn enn original */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Digital particles animation */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+    
+        .particle {
+            position: absolute;
+            display: block;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .big-paragraph {
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 4px 14px rgba(245, 162, 140, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 162, 140, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-light);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(21, 23, 38, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(21, 23, 38, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rounded-corners {
+            border-radius: 20px;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .z-index-10 {
+            z-index: 10;
+        }
+        
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(42, 44, 68, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(42, 44, 68, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 35px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .header-cta {
+            margin-left: 30px;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* Animated decoration */
+        .animated-shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape1 {
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            bottom: -150px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.05);
+            }
+        }
+        
+        /* Hero Section */
+        .page-hero {
+            padding: 180px 0 100px;
+            position: relative;
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(245, 162, 140, 0.2), transparent 60%);
+            z-index: 1;
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+        }
+
+        .hero-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        /* Diagonal Banner */
+        .diagonal-banner {
+            position: relative;
+            padding: 0;
+            margin-top: -50px;
+            z-index: 3;
+        }
+
+        .diagonal-container {
+            position: relative;
+            height: 100px;
+            overflow: hidden;
+        }
+
+        .diagonal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150%;
+            height: 100px;
+            background-color: var(--white);
+            transform: rotate(-2deg) translateY(-30%) translateX(-10%);
+            z-index: 1;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .intro-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .intro-content h2 .highlight {
+            position: relative;
+            z-index: 1;
+            color: var(--primary);
+        }
+        
+        .intro-content p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .cta-button {
+            margin-top: 20px;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 100px 0;
+            background-color: var(--background);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features-section::before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .features-header {
+            grid-column: span 12;
+            max-width: 700px;
+            margin-bottom: 50px;
+        }
+        
+        .features-header h2 {
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-orange);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-light);
+        }
+        
+        .feature-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-item.large {
+            grid-column: span 8;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .feature-item.medium {
+            grid-column: span 4;
+        }
+        
+        .feature-item.small {
+            grid-column: span 4;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: rgba(245, 162, 140, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+        
+        .feature-item.large .feature-icon {
+            margin-bottom: 0;
+        }
+        
+        .feature-item:hover .feature-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+        
+        .feature-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        
+        .feature-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.05rem;
+        }
+
+        /* Terminal Section */
+        .terminal-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .terminal-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .terminal-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .terminal-header h2 .highlight {
+            position: relative;
+            z-index: 1;
+            color: var(--primary);
+        }
+        
+        .terminal-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .terminal-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--secondary-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .terminal-header-bar {
+            background-color: var(--secondary-light);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .terminal-dot.red {
+            background-color: #FF5F57;
+        }
+        
+        .terminal-dot.yellow {
+            background-color: #FFBD2E;
+        }
+        
+        .terminal-dot.green {
+            background-color: #28CA41;
+        }
+        
+        .terminal-title {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .terminal-content {
+            padding: 20px;
+            color: var(--light);
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            height: 400px;
+            overflow-y: auto;
+        }
+        
+        .command-line {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .prompt {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        .command {
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .output {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .highlight-text {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Process Section - Improved Version */
+        .process-section {
+            padding: 100px 0;
+            background-color: var(--secondary-light);
+            position: relative;
+            color: var(--white);
+        }
+        
+        .process-header {
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .process-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .process-header h2 .highlight {
+            position: relative;
+            z-index: 1;
+            color: var(--primary);
+        }
+        
+        .process-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .process-step {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: var(--primary);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background-color: rgba(245, 162, 140, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover .step-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        
+        .step-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.05rem;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .demo-container {
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .demo-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .demo-header p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-preview {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-preview:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .dashboard-header {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .dashboard-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .dashboard-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .dashboard-option {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-option:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+        
+        .dashboard-content {
+            padding: 30px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card.large {
+            grid-column: span 8;
+        }
+        
+        .dashboard-card.medium {
+            grid-column: span 4;
+        }
+        
+        .dashboard-card.small {
+            grid-column: span 3;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .card-options {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .metric-container {
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .metric-value.success {
+            color: #28CA41;
+        }
+        
+        .metric-value.warning {
+            color: #FFBD2E;
+        }
+        
+        .metric-value.danger {
+            color: #FF5F57;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(245, 162, 140, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(90deg, transparent 0%, transparent 20%, var(--primary) 20%, var(--primary) 21%, transparent 21%, transparent 40%, var(--primary) 40%, var(--primary) 41%, transparent 41%, transparent 60%, var(--primary) 60%, var(--primary) 61%, transparent 61%, transparent 80%, var(--primary) 80%, var(--primary) 81%, transparent 81%);
+            background-size: 100% 100%;
+            background-position: 0 0;
+            transform: scale(1, -1);
+            transform-origin: bottom;
+        }
+        
+        .chart-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary) 0%, rgba(245, 162, 140, 0.1) 100%);
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,100 L20,80 L40,90 L60,40 L80,60 L100,20 L100,100 Z' fill='%23000'/%3E%3C/svg%3E");
+            mask-size: 100% 100%;
+        }
+        
+        .alert-list {
+            list-style: none;
+        }
+        
+        .alert-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-item.critical {
+            background-color: rgba(255, 95, 87, 0.1);
+            color: #FF5F57;
+        }
+        
+        .alert-item.warning {
+            background-color: rgba(255, 189, 46, 0.1);
+            color: #FFBD2E;
+        }
+        
+        .alert-item.info {
+            background-color: rgba(40, 202, 65, 0.1);
+            color: #28CA41;
+        }
+        
+        .alert-icon {
+            margin-right: 10px;
+        }
+        
+        .demo-cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            background-color: var(--secondary-dark);
+            position: relative;
+            color: var(--white);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contact-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-info p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+        
+        .contact-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .contact-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 162, 140, 0.2);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 35px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--secondary);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 5;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--secondary-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item.active {
+            color: var(--primary);
+            background-color: rgba(245, 162, 140, 0.1);
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+        
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+        
+        /* Typing animation for terminal */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(60, end);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1, .page-title {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .intro-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .feature-item.large {
+                grid-column: span 6;
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .feature-item.large .feature-icon {
+                margin: 0 auto 25px;
+            }
+            
+            .feature-item.medium,
+            .feature-item.small {
+                grid-column: span 3;
+            }
+            
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .dashboard-card.large {
+                grid-column: span 6;
+            }
+            
+            .dashboard-card.medium,
+            .dashboard-card.small {
+                grid-column: span 3;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--secondary);
+                flex-direction: column;
+                transition: all 0.4s ease;
+                padding: 40px;
+                z-index: 99;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-item {
+                margin: 0 0 20px;
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 10px 0;
+                font-size: 1.1rem;
+            }
+            
+            .header-cta {
+                margin: 20px 0 0;
+                width: 100%;
+            }
+            
+            .header-cta .btn {
+                width: 100%;
+            }
+            
+            .page-hero {
+                padding: 120px 0 80px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-item.large,
+            .feature-item.medium,
+            .feature-item.small {
+                grid-column: span 1;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-card.large,
+            .dashboard-card.medium,
+            .dashboard-card.small {
+                grid-column: span 1;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .demo-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="menuToggle" aria-label="Åpne/lukke meny">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Hjem</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link active">Våre tjenester</a>
+                        <div class="dropdown-content">
+                            <a href="it-drift.html" class="dropdown-item">IT-drift</a>
+                            <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
+                            <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
+                            <a href="innsikt.html" class="dropdown-item">Innsikt og analyse</a>
+                            <a href="devops-monitorering.html" class="dropdown-item active">DevOps monitorering</a>
+                            <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="om.html" class="nav-link">Om oss</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#kontakt" class="nav-link">Kontakt</a>
+                    </li>
+                </ul>
+                <a href="#kontakt" class="btn btn-primary header-cta">Kontakt oss</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero" id="hero">
+            <div class="animated-shape shape1"></div>
+            <div class="animated-shape shape2"></div>
+            <div class="container">
+                <div class="page-hero-content">
+                    <h1 class="page-title">DevOps <span class="text-primary">Monitorering</span> & Logging</h1>
+                    <p class="big-paragraph">Få full oversikt og proaktiv sikkerhet med våre avanserte løsninger for monitorering, logging og sanntidsanalyse av din infrastruktur og applikasjoner.</p>
+                    <div class="hero-buttons">
+                        <a href="#demo" class="btn btn-primary">Se vår monitor i aksjon</a>
+                        <a href="#kontakt" class="btn btn-outline">Kontakt oss</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section class="intro-section" id="intro">
+            <div class="container">
+                <div class="intro-grid">
+                    <div class="intro-content">
+                        <h2>Hold dine systemer <span class="text-primary">synlige</span>, <span class="text-primary">sikre</span> og <span class="text-primary">pålitelige</span> med avansert monitorering</h2>
+                        <p class="big-paragraph">I dagens komplekse og trussel-utsatte IT-miljøer er det avgjørende å ha kontinuerlig innsikt i både sikkerhetsstatus og operasjonell helsetilstand til applikasjoner og infrastruktur. Med Ciphers monitoreringsløsninger får du sanntidsovervåking som sikrer både sikkerhet, stabilitet og ytelse.</p>
+                        <p>Våre omfattende monitorerings- og loggløsninger gir deg detaljerte innsikter for å oppdage både sikkerhetstrusler og ytelsesproblemer før de påvirker forretningskritiske systemer. Ved å samle, analysere og korrelere logger fra hele miljøet bygger vi et komplett sikkerhetsbilde som fremhever avvik og potensielle trusler. Vi kombinerer sentralisert logging, avansert logganalyse, sikkerhetsorientert overvåking og intelligente varsler i én helhetlig plattform.</p>
+                    </div>
+                    <div class="intro-img-container">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="DevOps Monitoring Control Center" class="intro-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="tjenester">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="features-header">
+                        <h2>Sikker og fullstendig innsikt i hele teknologistacken</h2>
+                        <p>Våre monitorerings- og loggløsninger gir deg et helhetlig sikkerhetsbilde av applikasjoner, infrastruktur og nettverkssystemer, med kontinuerlig overvåking av både sikkerhetstrusler, avvik, ytelse og kapasitet.</p>
+                    </div>
+                    
+                    <div class="feature-item large animation-float">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Sikkerhetsovervåking og logging</h3>
+                            <p>Vi kombinerer avansert logging og kontinuerlig sikkerhetsmonitorering for å oppdage og varsle om sikkerhetstrusler i sanntid. Ved å kryss-korrelere data fra alle sikkerhetslagene i infrastrukturen detekterer vi avvik, uautorisert tilgang og potensielle angrepsmønstre før de får konsekvenser.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item medium animation-float delay-1">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Avansert logganalyse</h3>
+                            <p>Vår sentraliserte loggplattform samler, prosesserer og analyserer logger fra alle systemer med maskinlæring og mønstergjenkjenning for å identifisere komplekse problemer og trusselscenarier som ellers ville vært skjult i datavolumene.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item medium animation-float delay-2">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Ytelsesovervåking og proaktiv varsling</h3>
+                            <p>Ved å spore kritiske ytelsesmetrikker i sanntid og analysere trender kan vi varsle om potensielle problemer før de påvirker sluttbrukere, med prediktiv analyse som identifiserer kommende kapasitetsproblemer.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item small animation-float">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Atferdsbasert overvåking</h3>
+                            <p>Identifiserer unormal brukeraktivitet og avvik fra etablerte referanselinjer for å oppdage potensielle innsidertrusler og kompromitterte kontoer.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item small animation-float delay-1">
+                        <div class="feature-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Infrastruktur- og nettverksovervåking</h3>
+                            <p>Kontinuerlig monitorering av infrastruktur og nettverkstrafikk for å oppdage nettverksanomalier, uautorisert dataoverføring og sikkerhetssårbarheter.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item small animation-float delay-2">
+                        <div class="feature-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Compliance og revisjonslogger</h3>
+                            <p>Automatisert loggføring og rapportering som sikrer etterlevelelse av regulatoriske krav og forenkler sikkerhetsrevisjoner med uforanderlige audit-logger.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terminal Section -->
+        <section class="terminal-section" id="terminal">
+            <div class="container">
+                <div class="terminal-header">
+                    <h2>Kraftfull <span class="highlight">sikkerhet og logganalyse</span> i sanntid</h2>
+                    <p>Våre monitorerings- og logganalyseløsninger gir deg dyptgående innsikt og proaktiv sikkerhetsovervåking med kraftfulle verktøy som integreres sømløst i DevOps-arbeidsflyten.</p>
+                </div>
+                
+                <div class="terminal-container">
+                    <div class="terminal-header-bar">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                        </div>
+                        <div class="terminal-title">cipher-devops-monitor</div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="command-line">
+                            <span class="prompt">user@server:~$</span>
+                            <span class="command typing">cipher-monitor status --service auth-api</span>
+                        </div>
+                        <div class="output">
+[<span class="highlight-text">INFO</span>] Checking status for service: auth-api
+[<span class="highlight-text">INFO</span>] Environment: production
+[<span class="highlight-text">OK</span>] Service is running (4/4 instances)
+[<span class="highlight-text">OK</span>] Security scan: No vulnerabilities detected
+[<span class="highlight-text">OK</span>] Authentication logs: Normal patterns
+[<span class="highlight-text">OK</span>] Failed login attempts: 2 (threshold: 10/hour)
+[<span class="highlight-text">OK</span>] Response Time: 187ms (avg last hour)
+[<span class="highlight-text">OK</span>] Error Rate: 0.02% (threshold: 1%)
+[<span class="highlight-text">INFO</span>] Security updates available: None
+                        </div>
+                        
+                        <div class="command-line">
+                            <span class="prompt">user@server:~$</span>
+                            <span class="command typing">cipher-logs search --service auth-api --level error --last 6h</span>
+                        </div>
+                        <div class="output">
+[<span class="highlight-text">INFO</span>] Analyzing security logs across all systems, last 6 hours
+[<span class="highlight-text">INFO</span>] Running advanced pattern detection and correlation
+
+<span class="highlight-text">2025-03-22 07:15:22</span> [WARN] [firewall-4d9f2] Multiple connection attempts from IP 103.45.67.89 - rate limiting applied
+<span class="highlight-text">2025-03-22 08:42:33</span> [WARN] [auth-api-7f8d9] Multiple failed login attempts for user admin (5 attempts)
+<span class="highlight-text">2025-03-22 09:21:17</span> [ALERT] [ids-system] Potential SQL injection pattern detected in web-frontend logs
+<span class="highlight-text">2025-03-22 09:22:05</span> [INFO] [waf-9d4e6] Attack signature matched: XSS attempt blocked from IP 203.57.129.74
+
+[<span class="highlight-text">SECURITY</span>] Correlation analysis: Potential targeted attack pattern detected
+[<span class="highlight-text">ACTION</span>] Automated remediation applied: IP 203.57.129.74 blocked for 24 hours
+                        </div>
+                        
+                        <div class="command-line">
+                            <span class="prompt">user@server:~$</span>
+                            <span class="command typing">cipher-trace request --id a1b2c3d4-e5f6-7890</span>
+                        </div>
+                        <div class="output">
+[<span class="highlight-text">INFO</span>] Tracing request a1b2c3d4-e5f6-7890
+[<span class="highlight-text">INFO</span>] Total request time: 342ms
+
+<span class="highlight-text">→ gateway-service</span> (24ms) - Request received and authenticated
+  <span class="highlight-text">→ user-service</span> (58ms) - Retrieved user profile and permissions
+  <span class="highlight-text">→ auth-api</span> (112ms) - Validated session token
+    <span class="highlight-text">→ db-service</span> (98ms) - Database query execution
+  <span class="highlight-text">→ content-service</span> (142ms) - Retrieved personalized content
+    <span class="highlight-text">→ cache-service</span> (12ms) - Cache hit (90% ratio)
+<span class="highlight-text">→ gateway-service</span> (6ms) - Response assembled and returned
+
+[<span class="highlight-text">INFO</span>] Potential optimization: Slow database query in auth-api
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section" id="prosess">
+            <div class="container">
+                <div class="process-header">
+                    <h2>Vår <span class="highlight">sikkerhetsbevisste</span> monitoreringsprosess</h2>
+                    <p>Vi følger en strukturert prosess for å implementere omfattende monitorering, logging og sikkerhetsovervåking i din infrastruktur.</p>
+                </div>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="step-title">Sikkerhetsanalyse</h3>
+                        <p class="step-description">Vi gjennomfører en grundig kartlegging av ditt IT-miljø for å identifisere kritiske systemer, sikkerhetsrisikoer og datastrømmer som krever monitorering.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="step-title">Implementering</h3>
+                        <p class="step-description">Vi implementerer logginnsamling, sikkerhetsovervåking og monitorering med skreddersydde varslingsregler som fokuserer på både sikkerhet og driftsstabilitet.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="step-title">Automatisert respons</h3>
+                        <p class="step-description">Vi etablerer automatisert respons på sikkerhetstrusler og driftshendelser som raskt kan isolere og begrense potensielle problemer før de eskalerer.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-icon">
+                            <i class="fas fa-shield-virus"></i>
+                        </div>
+                        <h3 class="step-title">Kontinuerlig sikkerhetsforbedring</h3>
+                        <p class="step-description">Vi jobber proaktivt med å forbedre sikkerhetsprofilen basert på trusselanalyse, nye sårbarheter og endringer i IT-miljøet ditt.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Section -->
+        <section class="demo-section" id="demo">
+            <div class="container">
+                <div class="demo-container">
+                    <div class="demo-header">
+                        <h2>Se vår sikkerhets- og monitoring-løsning i aksjon</h2>
+                        <p>Et eksempel på hvordan vårt sikkerhetsorienterte monitoring-dashboard gir deg total innsikt i både sikkerhetshendelser, logger og driftsstatus fra hele systemlandskapet.</p>
+                    </div>
+                    
+                    <div class="dashboard-preview">
+                        <div class="dashboard-header">
+                            <div class="dashboard-title">
+                                <i class="fas fa-tachometer-alt"></i> Cipher DevOps Monitor Dashboard
+                            </div>
+                            <div class="dashboard-options">
+                                <div class="dashboard-option">Last 24 timer</div>
+                                <div class="dashboard-option">Produksjon</div>
+                                <div class="dashboard-option">Alle systemer</div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-content">
+                            <div class="dashboard-grid">
+                                <div class="dashboard-card medium">
+                                    <div class="card-header">
+                                        <div class="card-title">Sikkerhetsstatus</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="metric-container">
+                                        <div class="metric-value success">92/100</div>
+                                        <div class="metric-label">Sikkerhetspoeng</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card medium">
+                                    <div class="card-header">
+                                        <div class="card-title">Detekterte trusler</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="metric-container">
+                                        <div class="metric-value">5</div>
+                                        <div class="metric-label">Siste 24 timer (alle blokkert)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card small">
+                                    <div class="card-header">
+                                        <div class="card-title">Loggvolum</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="metric-container">
+                                        <div class="metric-value">3.7GB</div>
+                                        <div class="metric-label">Siste 24t</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card small">
+                                    <div class="card-header">
+                                        <div class="card-title">Autentiseringshendelser</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="metric-container">
+                                        <div class="metric-value">12,451</div>
+                                        <div class="metric-label">98.3% suksess</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card small">
+                                    <div class="card-header">
+                                        <div class="card-title">Systemhelse</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="metric-container">
+                                        <div class="metric-value success">99.2%</div>
+                                        <div class="metric-label">Oppetid</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card small">
+                                    <div class="card-header">
+                                        <div class="card-title">Anomalideteksjon</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="metric-container">
+                                        <div class="metric-value">3</div>
+                                        <div class="metric-label">Nettverksavvik</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card large">
+                                    <div class="card-header">
+                                        <div class="card-title">Sikkerhetshendelser over tid</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <div class="chart-container">
+                                        <div class="chart-placeholder">
+                                            <div class="chart-line"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-card medium">
+                                    <div class="card-header">
+                                        <div class="card-title">Aktive sikkerhetsvarsler</div>
+                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
+                                    <ul class="alert-list">
+                                        <li class="alert-item critical">
+                                            <span class="alert-icon"><i class="fas fa-shield-alt"></i></span>
+                                            <span>Unormal brukeraktivitet - admin-konto</span>
+                                        </li>
+                                        <li class="alert-item warning">
+                                            <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                            <span>Multiple sikkerhetsskanning-forsøk blokkert</span>
+                                        </li>
+                                        <li class="alert-item info">
+                                            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                                            <span>Sikkerhetspatcher tilgjengelig for 3 servere</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-cta">
+                        <a href="#kontakt" class="btn btn-primary">Få en demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="kontakt">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-content">
+                        <h2>Klar for komplett sikkerhet og monitorering av IT-miljøet ditt?</h2>
+                        <p class="big-paragraph">Kontakt oss for en uforpliktende prat om hvordan vi kan hjelpe deg med å implementere avansert sikkerhetsmonitorering og logging som gir proaktiv beskyttelse og fullstendig innsikt.</p>
+                        <div class="contact-info">
+                            <p>hi@cipher.no</p>
+                            <p>+47 56 12 34 65</p>
+                            <p>Nøstegaten 58, 5011 Bergen</p>
+                        </div>
+                        <div class="contact-social">
+                            <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send oss en melding</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Fornavn" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Etternavn" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="E-post" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" placeholder="Telefon">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Hva kan vi hjelpe deg med?" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                    </div>
+                    <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Tjenester</h5>
+                    <ul class="footer-links">
+                        <li><a href="it-drift.html">IT-drift</a></li>
+                        <li><a href="sikkerhetstjenester.html">Sikkerhetstjenester</a></li>
+                        <li><a href="skytjenester.html">Skytjenester</a></li>
+                        <li><a href="innsikt.html">Innsikt og analyse</a></li>
+                        <li><a href="devops-monitorering.html">DevOps monitorering</a></li>
+                        <li><a href="strategisk-it-radgivning.html">Strategisk IT-rådgivning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Snarveier</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Hjem</a></li>
+                        <li><a href="index.html#tjenester">Tjenester</a></li>
+                        <li><a href="om.html">Om oss</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Kontakt</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank" rel="noopener">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
+                        <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Cipher Norge AS. Alle rettigheter reservert.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Sticky Header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would typically send the form data to a server
+                // For now, we'll just simulate a success message
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message
+                alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
+            });
+        }
+        
+        // Animation on Scroll
+        function animateOnScroll() {
+            const animatedElements = document.querySelectorAll('.animation-float');
+            
+            animatedElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Initialize animations
+        window.addEventListener('load', () => {
+            // Set initial styles
+            const animatedElements = document.querySelectorAll('.animation-float');
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.6s ease';
+            });
+            
+            // Trigger animations
+            animateOnScroll();
+        });
+        
+        // Trigger animations on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
