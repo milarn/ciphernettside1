@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps Monitorering & Logging — Cipher</title>
+    <title>Innsikt og analyse — Cipher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -558,128 +558,11 @@
             font-size: 1.05rem;
         }
 
-        /* Terminal Section */
-        .terminal-section {
-            padding: 100px 0;
-            background-color: var(--white);
-            position: relative;
-        }
-        
-        .terminal-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .terminal-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .terminal-header h2 .highlight {
-            position: relative;
-            z-index: 1;
-            color: var(--primary);
-        }
-        
-        .terminal-header p {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            color: var(--secondary);
-        }
-        
-        .terminal-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: var(--secondary-dark);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-        
-        .terminal-header-bar {
-            background-color: var(--secondary-light);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .terminal-dots {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
-        .terminal-dot.red {
-            background-color: #FF5F57;
-        }
-        
-        .terminal-dot.yellow {
-            background-color: #FFBD2E;
-        }
-        
-        .terminal-dot.green {
-            background-color: #28CA41;
-        }
-        
-        .terminal-title {
-            margin-left: 20px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            flex: 1;
-            text-align: center;
-        }
-        
-        .terminal-content {
-            padding: 20px;
-            color: var(--light);
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            height: 400px;
-            overflow-y: auto;
-        }
-        
-        .command-line {
-            display: flex;
-            margin-bottom: 10px;
-        }
-        
-        .prompt {
-            color: var(--primary);
-            margin-right: 10px;
-        }
-        
-        .command {
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-        
-        .output {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 20px;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .highlight-text {
-            color: var(--primary);
-            font-weight: bold;
-        }
-
         /* Process Section - Improved Version */
         .process-section {
             padding: 100px 0;
-            background-color: var(--secondary-light);
+            background-color: var(--white);
             position: relative;
-            color: var(--white);
         }
         
         .process-header {
@@ -704,30 +587,29 @@
             max-width: 700px;
             margin: 0 auto;
             font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--secondary);
         }
         
         .process-steps {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-bottom: 50px;
         }
         
         .process-step {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: var(--light-gray);
             border-radius: 20px;
             padding: 40px 30px;
             position: relative;
             transition: all 0.3s ease;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         .process-step:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
         .step-number {
@@ -772,259 +654,127 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 15px;
-            color: var(--white);
+            color: var(--secondary);
         }
         
         .step-description {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--gray);
             font-size: 1.05rem;
+        }
+        
+        .process-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .process-img-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            max-width: 800px;
+        }
+        
+        .process-img-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            background: var(--gradient-orange);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .process-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: all 0.3s ease;
+        }
+        
+        .process-img:hover {
+            transform: perspective(1000px) rotateY(0);
         }
 
         /* Demo Section */
         .demo-section {
             padding: 100px 0;
-            background-color: var(--white);
-            position: relative;
-        }
-        
-        .demo-container {
-            background-color: var(--light-gray);
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-        }
-        
-        .demo-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .demo-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-        
-        .demo-header p {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .dashboard-preview {
-            background-color: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .dashboard-preview:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        .dashboard-header {
-            background-color: var(--secondary);
+            background-color: var(--secondary-light);
             color: var(--white);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .dashboard-title {
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-        
-        .dashboard-title i {
-            margin-right: 10px;
-            color: var(--primary);
-        }
-        
-        .dashboard-options {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .dashboard-option {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            padding: 5px 10px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .dashboard-option:hover {
-            background-color: var(--primary);
-            color: var(--secondary);
-        }
-        
-        .dashboard-content {
-            padding: 30px;
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-        }
-        
-        .dashboard-card {
-            background-color: var(--light-gray);
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .dashboard-card.large {
-            grid-column: span 8;
-        }
-        
-        .dashboard-card.medium {
-            grid-column: span 4;
-        }
-        
-        .dashboard-card.small {
-            grid-column: span 3;
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--secondary);
-        }
-        
-        .card-options {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        
-        .metric-container {
-            text-align: center;
-        }
-        
-        .metric-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 5px;
-        }
-        
-        .metric-value.success {
-            color: #28CA41;
-        }
-        
-        .metric-value.warning {
-            color: #FFBD2E;
-        }
-        
-        .metric-value.danger {
-            color: #FF5F57;
-        }
-        
-        .metric-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        
-        .chart-container {
-            height: 200px;
-            position: relative;
-        }
-        
-        .chart-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(245, 162, 140, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-            border-radius: 8px;
             position: relative;
             overflow: hidden;
         }
         
-        .chart-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(90deg, transparent 0%, transparent 20%, var(--primary) 20%, var(--primary) 21%, transparent 21%, transparent 40%, var(--primary) 40%, var(--primary) 41%, transparent 41%, transparent 60%, var(--primary) 60%, var(--primary) 61%, transparent 61%, transparent 80%, var(--primary) 80%, var(--primary) 81%, transparent 81%);
-            background-size: 100% 100%;
-            background-position: 0 0;
-            transform: scale(1, -1);
-            transform-origin: bottom;
-        }
-        
-        .chart-line::before {
+        .demo-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, var(--primary) 0%, rgba(245, 162, 140, 0.1) 100%);
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,100 L20,80 L40,90 L60,40 L80,60 L100,20 L100,100 Z' fill='%23000'/%3E%3C/svg%3E");
-            mask-size: 100% 100%;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.1), transparent 70%);
         }
         
-        .alert-list {
-            list-style: none;
+        .demo-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
         }
         
-        .alert-item {
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
+        .demo-header {
+            max-width: 800px;
+            margin: 0 auto 40px;
         }
         
-        .alert-item.critical {
-            background-color: rgba(255, 95, 87, 0.1);
-            color: #FF5F57;
+        .demo-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
         
-        .alert-item.warning {
-            background-color: rgba(255, 189, 46, 0.1);
-            color: #FFBD2E;
-        }
-        
-        .alert-item.info {
-            background-color: rgba(40, 202, 65, 0.1);
-            color: #28CA41;
-        }
-        
-        .alert-icon {
-            margin-right: 10px;
+        .demo-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .demo-cta {
-            text-align: center;
-            margin-top: 40px;
+            margin-top: 30px;
+        }
+        
+        .demo-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+        
+        .demo-feature {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-feature:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .demo-feature i {
+            margin-right: 10px;
         }
 
         /* Contact Section */
         .contact-section {
             padding: 100px 0;
-            background-color: var(--secondary-dark);
+            background-color: var(--white);
             position: relative;
-            color: var(--white);
         }
         
         .contact-grid {
@@ -1036,7 +786,7 @@
         .contact-content h2 {
             font-size: 2.5rem;
             margin-bottom: 30px;
-            color: var(--white);
+            color: var(--secondary);
         }
         
         .contact-info {
@@ -1045,7 +795,7 @@
         
         .contact-info p {
             font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--secondary);
             margin-bottom: 10px;
         }
         
@@ -1059,7 +809,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--secondary-light);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1074,11 +824,10 @@
         }
         
         .contact-form {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: var(--light-gray);
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
         
         .form-group {
@@ -1088,23 +837,17 @@
         .form-control {
             width: 100%;
             padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(33, 35, 56, 0.1);
             border-radius: 12px;
             font-size: 1rem;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--white);
         }
         
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(245, 162, 140, 0.2);
-        }
-        
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.5);
         }
         
         textarea.form-control {
@@ -1117,7 +860,6 @@
             background-color: var(--secondary-dark);
             color: var(--white);
             padding: 80px 0 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .footer-grid {
@@ -1290,18 +1032,6 @@
             animation-delay: 0.4s;
         }
         
-        /* Typing animation for terminal */
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        .typing {
-            overflow: hidden;
-            white-space: nowrap;
-            animation: typing 3s steps(60, end);
-        }
-        
         /* Responsive Styles */
         @media (max-width: 992px) {
             h1, .page-title {
@@ -1338,20 +1068,7 @@
             }
             
             .process-steps {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            
-            .dashboard-card.large {
-                grid-column: span 6;
-            }
-            
-            .dashboard-card.medium,
-            .dashboard-card.small {
-                grid-column: span 3;
+                grid-template-columns: 1fr;
             }
             
             .footer-grid {
@@ -1435,20 +1152,6 @@
                 grid-column: span 1;
             }
             
-            .process-steps {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-card.large,
-            .dashboard-card.medium,
-            .dashboard-card.small {
-                grid-column: span 1;
-            }
-            
             .footer-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -1463,8 +1166,8 @@
                 justify-content: center;
             }
             
-            .demo-container {
-                padding: 30px 20px;
+            .process-img-container::before {
+                display: none;
             }
         }
     </style>
@@ -1488,13 +1191,12 @@
                         <a href="index.html" class="nav-link">Hjem</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link active">Våre tjenester</a>
+                        <a href="#" class="nav-link">Våre tjenester</a>
                         <div class="dropdown-content">
                             <a href="it-drift.html" class="dropdown-item">IT-drift</a>
                             <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
                             <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
-                            <a href="innsiktoganalyse.html" class="dropdown-item">Innsikt og analyse</a>
-                            <a href="devops-monitorering.html" class="dropdown-item active">DevOps monitorering</a>
+                            <a href="innsikt.html" class="dropdown-item active">Innsikt og analyse</a>
                             <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
                         </div>
                     </li>
@@ -1517,10 +1219,10 @@
             <div class="animated-shape shape2"></div>
             <div class="container">
                 <div class="page-hero-content">
-                    <h1 class="page-title">DevOps <span class="text-primary">Monitorering</span> & Logging</h1>
-                    <p class="big-paragraph">Få full oversikt og proaktiv sikkerhet med våre avanserte løsninger for monitorering, logging og sanntidsanalyse av din infrastruktur og applikasjoner.</p>
+                    <h1 class="page-title">Datainnsikt og analyse</h1>
+                    <p class="big-paragraph">Transformér dine rådata til verdifulle innsikter som driver forretningsvekst og effektive beslutninger.</p>
                     <div class="hero-buttons">
-                        <a href="#demo" class="btn btn-primary">Se vår monitor i aksjon</a>
+                        <a href="innsiktdemo.html" class="btn btn-primary">Se dashboard demo</a>
                         <a href="#kontakt" class="btn btn-outline">Kontakt oss</a>
                     </div>
                 </div>
@@ -1532,12 +1234,15 @@
             <div class="container">
                 <div class="intro-grid">
                     <div class="intro-content">
-                        <h2>Hold dine systemer <span class="text-primary">synlige</span>, <span class="text-primary">sikre</span> og <span class="text-primary">pålitelige</span> med avansert monitorering</h2>
-                        <p class="big-paragraph">I dagens komplekse og trussel-utsatte IT-miljøer er det avgjørende å ha kontinuerlig innsikt i både sikkerhetsstatus og operasjonell helsetilstand til applikasjoner og infrastruktur. Med Ciphers monitoreringsløsninger får du sanntidsovervåking som sikrer både sikkerhet, stabilitet og ytelse.</p>
-                        <p>Våre omfattende monitorerings- og loggløsninger gir deg detaljerte innsikter for å oppdage både sikkerhetstrusler og ytelsesproblemer før de påvirker forretningskritiske systemer. Ved å samle, analysere og korrelere logger fra hele miljøet bygger vi et komplett sikkerhetsbilde som fremhever avvik og potensielle trusler. Vi kombinerer sentralisert logging, avansert logganalyse, sikkerhetsorientert overvåking og intelligente varsler i én helhetlig plattform.</p>
+                        <h3>Har du data som kan gi <span class="text-primary">verdifulle</span> innsikter – men som du ikke helt vet hvordan du skal bruke?</h3>
+                        <p class="big-paragraph">I en tid der digitalisering og dataflyt stadig blir viktigere, hjelper Cipher deg med å skape verdi gjennom riktig bruk av data.</p>
+                        <p class="big-paragraph">Gjennom integrasjon, transformasjon, validering, modellering og analyse gir vi kundene våre strukturert, pålitelig og tilgjengelig informasjon. Vårt mål er å sikre at data ikke bare samles inn, men også brukes effektivt for å drive smartere beslutninger og mer effektive arbeidsprosesser.</p>
+                        <div class="cta-button">
+                        
+                        </div>
                     </div>
                     <div class="intro-img-container">
-                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="DevOps Monitoring Control Center" class="intro-img">
+                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/13b4574f-e2b8-406f-9c82-81bb6861ee22/Arbeidsom+Truls+%281%29.jpg" alt="Datainnsikt ekspert" class="intro-img">
                     </div>
                 </div>
             </div>
@@ -1548,153 +1253,79 @@
             <div class="container">
                 <div class="features-grid">
                     <div class="features-header">
-                        <h2>Sikker og fullstendig innsikt i hele teknologistacken</h2>
-                        <p>Våre monitorerings- og loggløsninger gir deg et helhetlig sikkerhetsbilde av applikasjoner, infrastruktur og nettverkssystemer, med kontinuerlig overvåking av både sikkerhetstrusler, avvik, ytelse og kapasitet.</p>
+                        <h2>Vi forstår at dagens IT-løsninger kan være komplekse</h2>
+                        <p>Data alene skaper ikke verdi – det er hvordan den brukes til å forbedre prosesser som gir reelle resultater. Vi hjelper våre kunder med å identifisere flaskehalser, redusere manuelle operasjoner og implementere smartere arbeidsflyter.</p>
                     </div>
                     
                     <div class="feature-item large animation-float">
                         <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Sikkerhetsovervåking og logging</h3>
-                            <p>Vi kombinerer avansert logging og kontinuerlig sikkerhetsmonitorering for å oppdage og varsle om sikkerhetstrusler i sanntid. Ved å kryss-korrelere data fra alle sikkerhetslagene i infrastrukturen detekterer vi avvik, uautorisert tilgang og potensielle angrepsmønstre før de får konsekvenser.</p>
+                            <h3>Datadrevet beslutningstaking</h3>
+                            <p>Vi hjelper deg å samle, strukturere og tilgjengeliggjøre data på en måte som gir verdi for hele organisasjonen. Med vår hjelp kan du få innsikter som legger grunnlaget for bedre forretningsbeslutninger.</p>
                         </div>
                     </div>
                     
                     <div class="feature-item medium animation-float delay-1">
                         <div class="feature-icon">
-                            <i class="fas fa-file-alt"></i>
+                            <i class="fas fa-database"></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Avansert logganalyse</h3>
-                            <p>Vår sentraliserte loggplattform samler, prosesserer og analyserer logger fra alle systemer med maskinlæring og mønstergjenkjenning for å identifisere komplekse problemer og trusselscenarier som ellers ville vært skjult i datavolumene.</p>
+                            <h3>Dataintegrasjon</h3>
+                            <p>Vi integrerer data fra forskjellige kilder for å skape en helhetlig oversikt over din virksomhet og fjerne informasjonssiloer som hindrer effektiv datautnyttelse.</p>
                         </div>
                     </div>
                     
                     <div class="feature-item medium animation-float delay-2">
                         <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fas fa-magic"></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Ytelsesovervåking og proaktiv varsling</h3>
-                            <p>Ved å spore kritiske ytelsesmetrikker i sanntid og analysere trender kan vi varsle om potensielle problemer før de påvirker sluttbrukere, med prediktiv analyse som identifiserer kommende kapasitetsproblemer.</p>
+                            <h3>Datatransformasjon</h3>
+                            <p>Vi transformerer rådata til strukturert informasjon som er klar for analyse og visualisering, slik at du enkelt kan få innsikt i viktige trender og mønstre.</p>
                         </div>
                     </div>
                     
                     <div class="feature-item small animation-float">
                         <div class="feature-icon">
-                            <i class="fas fa-user-shield"></i>
+                            <i class="fas fa-tachometer-alt"></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Atferdsbasert overvåking</h3>
-                            <p>Identifiserer unormal brukeraktivitet og avvik fra etablerte referanselinjer for å oppdage potensielle innsidertrusler og kompromitterte kontoer.</p>
+                            <h3>Dashboards og visualisering</h3>
+                            <p>Vi utvikler interaktive dashboards som gjør komplekse data enkle å forstå og handle på for hele organisasjonen.</p>
                         </div>
                     </div>
                     
                     <div class="feature-item small animation-float delay-1">
                         <div class="feature-icon">
-                            <i class="fas fa-network-wired"></i>
+                            <i class="fas fa-cogs"></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Infrastruktur- og nettverksovervåking</h3>
-                            <p>Kontinuerlig monitorering av infrastruktur og nettverkstrafikk for å oppdage nettverksanomalier, uautorisert dataoverføring og sikkerhetssårbarheter.</p>
+                            <h3>Prosessoptimalisering</h3>
+                            <p>Vi bruker dataanalyse for å identifisere flaskehalser og forbedringsmuligheter i dine arbeidsprosesser.</p>
                         </div>
                     </div>
                     
                     <div class="feature-item small animation-float delay-2">
                         <div class="feature-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            <i class="fas fa-robot"></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Compliance og revisjonslogger</h3>
-                            <p>Automatisert loggføring og rapportering som sikrer etterlevelelse av regulatoriske krav og forenkler sikkerhetsrevisjoner med uforanderlige audit-logger.</p>
+                            <h3>Automatisering</h3>
+                            <p>Vi implementerer databaserte automatiseringsløsninger som frigjør tid og reduserer feil i manuelle prosesser.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Terminal Section -->
-        <section class="terminal-section" id="terminal">
-            <div class="container">
-                <div class="terminal-header">
-                    <h2>Kraftfull <span class="highlight">sikkerhet og logganalyse</span> i sanntid</h2>
-                    <p>Våre monitorerings- og logganalyseløsninger gir deg dyptgående innsikt og proaktiv sikkerhetsovervåking med kraftfulle verktøy som integreres sømløst i DevOps-arbeidsflyten.</p>
-                </div>
-                
-                <div class="terminal-container">
-                    <div class="terminal-header-bar">
-                        <div class="terminal-dots">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                        </div>
-                        <div class="terminal-title">cipher-devops-monitor</div>
-                    </div>
-                    <div class="terminal-content">
-                        <div class="command-line">
-                            <span class="prompt">user@server:~$</span>
-                            <span class="command typing">cipher-monitor status --service auth-api</span>
-                        </div>
-                        <div class="output">
-[<span class="highlight-text">INFO</span>] Checking status for service: auth-api
-[<span class="highlight-text">INFO</span>] Environment: production
-[<span class="highlight-text">OK</span>] Service is running (4/4 instances)
-[<span class="highlight-text">OK</span>] Security scan: No vulnerabilities detected
-[<span class="highlight-text">OK</span>] Authentication logs: Normal patterns
-[<span class="highlight-text">OK</span>] Failed login attempts: 2 (threshold: 10/hour)
-[<span class="highlight-text">OK</span>] Response Time: 187ms (avg last hour)
-[<span class="highlight-text">OK</span>] Error Rate: 0.02% (threshold: 1%)
-[<span class="highlight-text">INFO</span>] Security updates available: None
-                        </div>
-                        
-                        <div class="command-line">
-                            <span class="prompt">user@server:~$</span>
-                            <span class="command typing">cipher-logs search --service auth-api --level error --last 6h</span>
-                        </div>
-                        <div class="output">
-[<span class="highlight-text">INFO</span>] Analyzing security logs across all systems, last 6 hours
-[<span class="highlight-text">INFO</span>] Running advanced pattern detection and correlation
-
-<span class="highlight-text">2025-03-22 07:15:22</span> [WARN] [firewall-4d9f2] Multiple connection attempts from IP 103.45.67.89 - rate limiting applied
-<span class="highlight-text">2025-03-22 08:42:33</span> [WARN] [auth-api-7f8d9] Multiple failed login attempts for user admin (5 attempts)
-<span class="highlight-text">2025-03-22 09:21:17</span> [ALERT] [ids-system] Potential SQL injection pattern detected in web-frontend logs
-<span class="highlight-text">2025-03-22 09:22:05</span> [INFO] [waf-9d4e6] Attack signature matched: XSS attempt blocked from IP 203.57.129.74
-
-[<span class="highlight-text">SECURITY</span>] Correlation analysis: Potential targeted attack pattern detected
-[<span class="highlight-text">ACTION</span>] Automated remediation applied: IP 203.57.129.74 blocked for 24 hours
-                        </div>
-                        
-                        <div class="command-line">
-                            <span class="prompt">user@server:~$</span>
-                            <span class="command typing">cipher-trace request --id a1b2c3d4-e5f6-7890</span>
-                        </div>
-                        <div class="output">
-[<span class="highlight-text">INFO</span>] Tracing request a1b2c3d4-e5f6-7890
-[<span class="highlight-text">INFO</span>] Total request time: 342ms
-
-<span class="highlight-text">→ gateway-service</span> (24ms) - Request received and authenticated
-  <span class="highlight-text">→ user-service</span> (58ms) - Retrieved user profile and permissions
-  <span class="highlight-text">→ auth-api</span> (112ms) - Validated session token
-    <span class="highlight-text">→ db-service</span> (98ms) - Database query execution
-  <span class="highlight-text">→ content-service</span> (142ms) - Retrieved personalized content
-    <span class="highlight-text">→ cache-service</span> (12ms) - Cache hit (90% ratio)
-<span class="highlight-text">→ gateway-service</span> (6ms) - Response assembled and returned
-
-[<span class="highlight-text">INFO</span>] Potential optimization: Slow database query in auth-api
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Process Section -->
+        <!-- Process Section - Improved Version -->
         <section class="process-section" id="prosess">
             <div class="container">
                 <div class="process-header">
-                    <h2>Vår <span class="highlight">sikkerhetsbevisste</span> monitoreringsprosess</h2>
-                    <p>Vi følger en strukturert prosess for å implementere omfattende monitorering, logging og sikkerhetsovervåking i din infrastruktur.</p>
+                    <h2>Vår <span class="highlight">datadrevne</span> tilnærming</h2>
+                    <p>Vi følger en strukturert prosess for å omdanne virksomhetens data til handlingsorienterte innsikter.</p>
                 </div>
                 
                 <div class="process-steps">
@@ -1703,167 +1334,65 @@
                         <div class="step-icon">
                             <i class="fas fa-search"></i>
                         </div>
-                        <h3 class="step-title">Sikkerhetsanalyse</h3>
-                        <p class="step-description">Vi gjennomfører en grundig kartlegging av ditt IT-miljø for å identifisere kritiske systemer, sikkerhetsrisikoer og datastrømmer som krever monitorering.</p>
+                        <h3 class="step-title">Dataidentifikasjon</h3>
+                        <p class="step-description">Vi starter med å kartlegge hvilke data du allerede har tilgjengelig, hvor de er lagret, og hvilke nye datakilder som kan være relevante for din virksomhet.</p>
                     </div>
                     
                     <div class="process-step">
                         <div class="step-number">2</div>
                         <div class="step-icon">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-cogs"></i>
                         </div>
-                        <h3 class="step-title">Implementering</h3>
-                        <p class="step-description">Vi implementerer logginnsamling, sikkerhetsovervåking og monitorering med skreddersydde varslingsregler som fokuserer på både sikkerhet og driftsstabilitet.</p>
+                        <h3 class="step-title">Integrasjon og rensing</h3>
+                        <p class="step-description">Vi samler og integrerer data fra ulike kilder, renser dataene for feil og duplikater, og strukturerer informasjonen for analyse.</p>
                     </div>
                     
                     <div class="process-step">
                         <div class="step-number">3</div>
                         <div class="step-icon">
-                            <i class="fas fa-robot"></i>
+                            <i class="fas fa-lightbulb"></i>
                         </div>
-                        <h3 class="step-title">Automatisert respons</h3>
-                        <p class="step-description">Vi etablerer automatisert respons på sikkerhetstrusler og driftshendelser som raskt kan isolere og begrense potensielle problemer før de eskalerer.</p>
+                        <h3 class="step-title">Analyse og presentasjon</h3>
+                        <p class="step-description">Vi analyserer dataene for å avdekke mønstre og innsikter, og utvikler dashboards og visualiseringer som gjør det enkelt å forstå og handle på informasjonen.</p>
                     </div>
-                    
-                    <div class="process-step">
-                        <div class="step-number">4</div>
-                        <div class="step-icon">
-                            <i class="fas fa-shield-virus"></i>
-                        </div>
-                        <h3 class="step-title">Kontinuerlig sikkerhetsforbedring</h3>
-                        <p class="step-description">Vi jobber proaktivt med å forbedre sikkerhetsprofilen basert på trusselanalyse, nye sårbarheter og endringer i IT-miljøet ditt.</p>
+                </div>
+                
+                <div class="process-image">
+                    <div class="process-img-container">
+                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/a7261fea-23da-4749-b554-27a08160e2d5/Whiteboard+Dante.jpg" alt="Prosessforbedring med data" class="process-img">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Demo Section -->
+        <!-- Demo Section (replaces the Highlight section) -->
         <section class="demo-section" id="demo">
             <div class="container">
                 <div class="demo-container">
                     <div class="demo-header">
-                        <h2>Se vår sikkerhets- og monitoring-løsning i aksjon</h2>
-                        <p>Et eksempel på hvordan vårt sikkerhetsorienterte monitoring-dashboard gir deg total innsikt i både sikkerhetshendelser, logger og driftsstatus fra hele systemlandskapet.</p>
-                    </div>
-                    
-                    <div class="dashboard-preview">
-                        <div class="dashboard-header">
-                            <div class="dashboard-title">
-                                <i class="fas fa-tachometer-alt"></i> Cipher DevOps Monitor Dashboard
-                            </div>
-                            <div class="dashboard-options">
-                                <div class="dashboard-option">Last 24 timer</div>
-                                <div class="dashboard-option">Produksjon</div>
-                                <div class="dashboard-option">Alle systemer</div>
-                            </div>
-                        </div>
-                        
-                        <div class="dashboard-content">
-                            <div class="dashboard-grid">
-                                <div class="dashboard-card medium">
-                                    <div class="card-header">
-                                        <div class="card-title">Sikkerhetsstatus</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="metric-container">
-                                        <div class="metric-value success">92/100</div>
-                                        <div class="metric-label">Sikkerhetspoeng</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card medium">
-                                    <div class="card-header">
-                                        <div class="card-title">Detekterte trusler</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="metric-container">
-                                        <div class="metric-value">5</div>
-                                        <div class="metric-label">Siste 24 timer (alle blokkert)</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card small">
-                                    <div class="card-header">
-                                        <div class="card-title">Loggvolum</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="metric-container">
-                                        <div class="metric-value">3.7GB</div>
-                                        <div class="metric-label">Siste 24t</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card small">
-                                    <div class="card-header">
-                                        <div class="card-title">Autentiseringshendelser</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="metric-container">
-                                        <div class="metric-value">12,451</div>
-                                        <div class="metric-label">98.3% suksess</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card small">
-                                    <div class="card-header">
-                                        <div class="card-title">Systemhelse</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="metric-container">
-                                        <div class="metric-value success">99.2%</div>
-                                        <div class="metric-label">Oppetid</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card small">
-                                    <div class="card-header">
-                                        <div class="card-title">Anomalideteksjon</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="metric-container">
-                                        <div class="metric-value">3</div>
-                                        <div class="metric-label">Nettverksavvik</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card large">
-                                    <div class="card-header">
-                                        <div class="card-title">Sikkerhetshendelser over tid</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <div class="chart-container">
-                                        <div class="chart-placeholder">
-                                            <div class="chart-line"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dashboard-card medium">
-                                    <div class="card-header">
-                                        <div class="card-title">Aktive sikkerhetsvarsler</div>
-                                        <div class="card-options"><i class="fas fa-ellipsis-v"></i></div>
-                                    </div>
-                                    <ul class="alert-list">
-                                        <li class="alert-item critical">
-                                            <span class="alert-icon"><i class="fas fa-shield-alt"></i></span>
-                                            <span>Unormal brukeraktivitet - admin-konto</span>
-                                        </li>
-                                        <li class="alert-item warning">
-                                            <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                            <span>Multiple sikkerhetsskanning-forsøk blokkert</span>
-                                        </li>
-                                        <li class="alert-item info">
-                                            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
-                                            <span>Sikkerhetspatcher tilgjengelig for 3 servere</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <h2>Se vårt interaktive dashboard i aksjon</h2>
+                        <p>Opplev hvordan vi transformerer komplekse data til lettforståelige visualiseringer, som gir deg innsiktene du trenger for å ta bedre beslutninger.</p>
+                        <div class="demo-cta">
+                            <a href="innsiktdemo.html" class="btn btn-primary">Utforsk demo dashbordet</a>
                         </div>
                     </div>
                     
-                    <div class="demo-cta">
-                        <a href="#kontakt" class="btn btn-primary">Få en demo</a>
+                    <div class="demo-features">
+                        <div class="demo-feature">
+                            <i class="fas fa-chart-bar"></i> Sanntidsdata
+                        </div>
+                        <div class="demo-feature">
+                            <i class="fas fa-filter"></i> Filtreringsmuligheter
+                        </div>
+                        <div class="demo-feature">
+                            <i class="fas fa-chart-pie"></i> Visualiseringer
+                        </div>
+                        <div class="demo-feature">
+                            <i class="fas fa-mobile-alt"></i> Responsivt design
+                        </div>
+                        <div class="demo-feature">
+                            <i class="fas fa-lightbulb"></i> Handlingsorientert innsikt
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1874,11 +1403,11 @@
             <div class="container">
                 <div class="contact-grid">
                     <div class="contact-content">
-                        <h2>Klar for komplett sikkerhet og monitorering av IT-miljøet ditt?</h2>
-                        <p class="big-paragraph">Kontakt oss for en uforpliktende prat om hvordan vi kan hjelpe deg med å implementere avansert sikkerhetsmonitorering og logging som gir proaktiv beskyttelse og fullstendig innsikt.</p>
+                        <h2>Ønsker du å bli mer datadrevet?</h2>
+                        <p class="big-paragraph">Kontakt oss for en uforpliktende prat om hvordan vi kan hjelpe din virksomhet med å utnytte dataene dine bedre og skape reell verdi.</p>
                         <div class="contact-info">
                             <p>hi@cipher.no</p>
-                            <p>+47 56 12 34 65</p>
+                            <p>+47 56 1234 65</p>
                             <p>Nøstegaten 58, 5011 Bergen</p>
                         </div>
                         <div class="contact-social">
@@ -1934,8 +1463,7 @@
                         <li><a href="it-drift.html">IT-drift</a></li>
                         <li><a href="sikkerhetstjenester.html">Sikkerhetstjenester</a></li>
                         <li><a href="skytjenester.html">Skytjenester</a></li>
-                        <li><a href="innsiktoganalyse.html">Innsikt og analyse</a></li>
-                        <li><a href="devops-monitorering.html">DevOps monitorering</a></li>
+                        <li><a href="innsikt.html">Innsikt og analyse</a></li>
                         <li><a href="strategisk-it-radgivning.html">Strategisk IT-rådgivning</a></li>
                     </ul>
                 </div>
@@ -2001,7 +1529,7 @@
                 // Reset form
                 contactForm.reset();
                 
-                // Show success message
+                // Show success message (you can customize this)
                 alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
             });
         }

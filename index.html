@@ -1091,7 +1091,8 @@
             margin-top: 10px;
         }
         
-        .dropdown:hover .dropdown-content {
+        .dropdown:hover .dropdown-content,
+        .dropdown.active .dropdown-content {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -1113,6 +1114,34 @@
         .dropdown-item.active {
             color: var(--primary);
             background-color: rgba(245, 162, 140, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: static;
+                background-color: rgba(255, 255, 255, 0.05);
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                margin-top: 0;
+                border-radius: 0;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                transition: max-height 0.3s ease, padding 0.3s ease;
+            }
+            
+            .dropdown.active .dropdown-content {
+                max-height: 300px;
+                padding: 10px 0;
+                margin-top: 10px;
+            }
+            
+            .dropdown-item {
+                padding: 10px 20px;
+                margin-left: 15px;
+            }
         }
     </style>
 </head>
@@ -1142,6 +1171,7 @@
                             <a href="innsiktoganalyse.html" class="dropdown-item">Innsikt og analyse</a>
                             <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
                             <a href="devops-monitorering.html" class="dropdown-item">DevOps-monitorering</a>
+                            <a href="doku.html" class="dropdown-item">Dokumentasjon as a Service</a>
                         </div>
                     </li>
                     <li class="nav-item"><a href="om.html" class="nav-link">Om oss</a></li>
@@ -1175,6 +1205,7 @@
                         <a href="#radgivning" class="service-badge">Strategisk IT-rådgivning</a>
                         <a href="#innsikt" class="service-badge">Datainnsikt & analyse</a>
                         <a href="#devops" class="service-badge">DevOps-monitorering</a>
+                        <a href="#dokumentasjon" class="service-badge">Dokumentasjon</a>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -1245,6 +1276,15 @@
                         <h3 class="service-title">DevOps-monitorering</h3>
                         <p class="service-description">Vi tilbyr omfattende DevOps-monitoreringsløsninger som sikrer kontinuerlig overvåking, rask feildeteksjon og forbedret systemstabilitet. Våre tjenester hjelper deg med å optimalisere utviklingsprosesser og drift.</p>
                         <a href="devops-monitorering.html" class="btn btn-outline">Les mer</a>
+                    </div>
+                    
+                    <div class="service-card" id="dokumentasjon">
+                        <div class="service-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="service-title">Dokumentasjon as a Service</h3>
+                        <p class="service-description">Vi tilbyr moderne dokumentasjonsløsninger som samler all teknisk og prosessuell informasjon på ett sted. Med vår enterprise-grade plattform kan du sikre at dokumentasjon alltid er oppdatert, søkbar og tilgjengelig for de rette personene.</p>
+                        <a href="doku.html" class="btn btn-outline">Les mer</a>
                     </div>
                 </div>
             </div>
@@ -1410,6 +1450,8 @@
                         <li><a href="#sikkerhet">Sikkerhetstjenester</a></li>
                         <li><a href="#radgivning">Strategisk IT-rådgivning</a></li>
                         <li><a href="#innsikt">Datainnsikt og analyse</a></li>
+                        <li><a href="#devops">DevOps-monitorering</a></li>
+                        <li><a href="#dokumentasjon">Dokumentasjon as a Service</a></li>
                     </ul>
                 </div>
                 
@@ -1444,103 +1486,115 @@
     <!-- JavaScript -->
     <script>
         // Mobile Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Sticky Header
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-        
-        // Mobile Dropdown Toggle
-        const dropdowns = document.querySelectorAll('.dropdown');
-        
-        dropdowns.forEach(dropdown => {
-            const link = dropdown.querySelector('.nav-link');
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.querySelector('.nav-menu');
             
-            link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent event from bubbling up to document
+                navMenu.classList.toggle('active');
+                menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Sticky Header
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile Dropdown Toggle
+            const dropdowns = document.querySelectorAll('.dropdown');
+            
+            dropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('.nav-link');
+                
+                link.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation(); // Prevent event from bubbling up
+                        dropdown.classList.toggle('active');
+                        
+                        // Close other dropdowns
+                        dropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+                }
+            });
+            
+            // Prevent dropdown menu clicks from closing the mobile menu
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            });
+            
+            // Active Navigation Link
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                const headerHeight = document.getElementById('header').offsetHeight;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - headerHeight - 100;
+                    const sectionHeight = section.offsetHeight;
                     
-                    // Close other dropdowns
-                    dropdowns.forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown) {
-                            otherDropdown.classList.remove('active');
-                        }
-                    });
-                }
+                    if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
             });
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+            
+            // Form Submission
+            const contactForm = document.getElementById('contactForm');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Here you would typically send the form data to a server
+                    // For now, we'll just simulate a success message
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Show success message
+                    alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
+                });
             }
         });
-        
-        // Active Navigation Link
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const headerHeight = document.getElementById('header').offsetHeight;
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - headerHeight - 100;
-                const sectionHeight = section.offsetHeight;
-                
-                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // Form Submission
-        const contactForm = document.getElementById('contactForm');
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const subject = document.getElementById('subject').value;
-                const message = document.getElementById('message').value;
-                
-                // Here you would typically send the form data to a server
-                // For now, we'll just simulate a success message
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Show success message
-                alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
-            });
-        }
     </script>
 </body>
 </html>
