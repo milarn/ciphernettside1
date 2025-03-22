@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT-drift — Cipher</title>
+    <title>Sikkerhetstjenester — Cipher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -331,8 +331,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at top right, rgba(245, 162, 140, 0.2), transparent 60%);
-            z-index: 1;
+            background: url('bilder/hero-cybersecurity.jpg') center center/cover;
+            opacity: 0.2;
+            z-index: 0;
         }
         
         .page-hero-content {
@@ -420,6 +421,46 @@
             transform: perspective(1000px) rotateY(0);
         }
 
+        /* What is Section */
+        .what-is-section {
+            padding: 100px 0;
+            background-color: var(--light-gray);
+            position: relative;
+        }
+        
+        .what-is-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .what-is-content {
+            color: var(--secondary);
+            text-align: center;
+        }
+        
+        .what-is-content h2 {
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .what-is-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .what-is-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
         /* Services Section */
         .services-section {
             padding: 100px 0;
@@ -443,20 +484,34 @@
         
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             position: relative;
             z-index: 2;
         }
         
-        .services-header {
-            grid-column: span 12;
-            max-width: 700px;
-            margin-bottom: 50px;
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
         }
         
-        .services-header h2 {
-            margin-bottom: 20px;
+        .section-title h2 {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
         }
         
         .service-item {
@@ -467,6 +522,9 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .service-item::before {
@@ -493,59 +551,58 @@
             transform: scaleX(1);
         }
         
-        .service-item.large {
-            grid-column: span 8;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 30px;
-            align-items: center;
-            padding: 40px;
+        .service-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
         
-        .service-item.medium {
-            grid-column: span 4;
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
         }
         
-        .service-item.small {
-            grid-column: span 4;
+        .service-item:hover .service-image img {
+            transform: scale(1.1);
         }
         
         .service-icon {
             width: 70px;
             height: 70px;
-            border-radius: 50%;
+            border-radius: 15px;
             background-color: rgba(245, 162, 140, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 25px;
             font-size: 28px;
             color: var(--primary);
             transition: all 0.3s ease;
-            margin-bottom: 25px;
-        }
-        
-        .service-item.large .service-icon {
-            margin-bottom: 0;
         }
         
         .service-item:hover .service-icon {
             background-color: var(--primary);
-            color: var(--white);
+            color: var(--secondary);
             transform: rotateY(180deg);
         }
         
-        .service-content h3 {
+        .service-item h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: var(--white);
         }
         
-        .service-content p {
+        .service-item p {
             color: rgba(255, 255, 255, 0.8);
             font-size: 1.05rem;
+            flex-grow: 1;
         }
 
-        /* Why Choose Us Section */
+        /* Features Section */
         .features-section {
             padding: 100px 0;
             background-color: var(--white);
@@ -557,36 +614,10 @@
             margin-bottom: 60px;
         }
         
-        .features-heading h2 {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-        
-        .features-heading h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--primary);
-        }
-        
-        .features-heading .section-subtitle {
-            color: var(--primary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .features-wrapper {
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 30px;
         }
         
         .feature-box {
@@ -598,6 +629,9 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .feature-box:hover {
@@ -621,6 +655,25 @@
             transform: scaleX(1);
         }
         
+        .feature-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-box:hover .feature-image img {
+            transform: scale(1.1);
+        }
+        
         .feature-icon {
             width: 80px;
             height: 80px;
@@ -641,95 +694,22 @@
             transform: rotateY(180deg);
         }
         
-        .feature-content h4 {
+        .feature-box h4 {
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: var(--secondary);
         }
         
-        .feature-content p {
+        .feature-box p {
             color: var(--secondary-light);
             font-size: 1rem;
-        }
-
-        /* Team Section */
-        .team-section {
-            padding: 100px 0;
-            background-color: var(--background);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .team-section::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: -100px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .team-header {
-            text-align: center;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .team-image {
-            position: relative;
-        }
-        
-        .team-image img {
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        
-        .team-image::after {
-            content: '';
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            right: -30px;
-            bottom: -30px;
-            border: 2px solid var(--primary);
-            border-radius: 20px;
-            z-index: -1;
-        }
-        
-        .team-content h3 {
-            font-size: 2.2rem;
-            margin-bottom: 25px;
-            color: var(--white);
-        }
-        
-        .team-content h3 span {
-            color: var(--primary);
-        }
-        
-        .team-content p {
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.9);
+            flex-grow: 1;
         }
 
         /* Contact Section */
         .contact-section {
             padding: 100px 0;
-            background-color: var(--white);
+            background-color: var(--light-gray);
             position: relative;
         }
         
@@ -749,16 +729,67 @@
             margin-bottom: 30px;
         }
         
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
         .contact-info p {
             font-size: 1.1rem;
             color: var(--secondary);
             margin-bottom: 10px;
         }
         
+        .contact-details {
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(245, 162, 140, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+        
+        .contact-text h5 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .contact-text a {
+            color: var(--secondary-light);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-text a:hover {
+            color: var(--primary);
+        }
+        
         .contact-social {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         
         .contact-social a {
@@ -780,10 +811,16 @@
         }
         
         .contact-form {
-            background-color: var(--light-gray);
+            background-color: var(--white);
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
         }
         
         .form-group {
@@ -948,29 +985,9 @@
             }
             
             .intro-grid,
-            .team-grid,
             .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
-            }
-            
-            .services-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            
-            .service-item.large {
-                grid-column: span 6;
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .service-item.large .service-icon {
-                margin: 0 auto 25px;
-            }
-            
-            .service-item.medium,
-            .service-item.small {
-                grid-column: span 3;
             }
             
             .footer-grid {
@@ -1060,17 +1077,8 @@
                 font-size: 2.5rem;
             }
             
-            .services-grid {
-                grid-template-columns:1fr;
-            }
-            
-            .service-item.large,
-            .service-item.medium,
-            .service-item.small {
-                grid-column: span 1;
-            }
-            
-            .features-wrapper {
+            .services-grid,
+            .features-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -1087,15 +1095,12 @@
             .footer-social {
                 justify-content: center;
             }
-            
-            .team-image::after {
-                display: none;
-            }
         }
     </style>
 </head>
 
 <body>
+    <!-- Header -->
     <header class="header" id="header">
         <div class="container header-container">
             <div class="logo">
@@ -1104,7 +1109,7 @@
                 </a>
             </div>
             
-            <button class="mobile-toggle" id="menuToggle">
+            <button class="mobile-toggle" id="menuToggle" aria-label="Åpne/lukke meny">
                 <i class="fas fa-bars"></i>
             </button>
             
@@ -1116,8 +1121,8 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link active">Våre tjenester</a>
                         <div class="dropdown-content">
-                            <a href="it-drift.html" class="dropdown-item active">IT-drift</a>
-                            <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
+                            <a href="it-drift.html" class="dropdown-item">IT-drift</a>
+                            <a href="sikkerhetstjenester.html" class="dropdown-item active">Sikkerhetstjenester</a>
                             <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
                             <a href="innsiktoganalyse.html" class="dropdown-item">Innsikt og analyse</a>
                             <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
@@ -1143,7 +1148,12 @@
         <section class="page-hero" id="hero">
             <div class="container">
                 <div class="page-hero-content">
-                    <h1 class="page-title">IT-drift</h1>
+                    <h1 class="page-title">Sikkerhetstjenester</h1>
+                    <p class="big-paragraph">Beskytt din bedrifts digitale eiendeler med pålitelige sikkerhetstjenester</p>
+                    <div class="hero-buttons">
+                        <a href="#tjenester" class="btn btn-primary">Se tjenester</a>
+                        <a href="#kontakt" class="btn btn-outline">Kontakt oss</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1153,193 +1163,196 @@
             <div class="container">
                 <div class="intro-grid">
                     <div class="intro-content">
-                        <h2>IT som fungerer - <span class="highlight">alltid!</span></h2>
-                        <p>Cipher er opptatt av at teknologien skal jobbe for deg, ikke motsatt. Vi leverer tjenester innen drift, vedlikehold og overvåking av dine IT-løsninger.</p>
-                        <p>Med kompetente medarbeidere, moderne verktøy og langsiktig perspektiv sikrer vi at din IT-infrastruktur alltid er i toppform – så du kan fokusere på kjernevirksomheten din.</p>
+                        <h2>Helhetlig beskyttelse mot <span class="highlight">cybertrusler</span></h2>
+                        <p>I en verden der digitale trusler blir stadig mer sofistikerte, er effektiv sikkerhet avgjørende for alle virksomheter. Cipher tilbyr omfattende sikkerhetstjenester som kombinerer avansert teknologi med ekspertkunnskap.</p>
+                        <p>Vårt team av sikkerhetsspesialister har omfattende erfaring med å håndtere alt fra grunnleggende til avanserte sikkerhetstrusler, og vi tilpasser våre løsninger for å møte dine spesifikke behov.</p>
                     </div>
                     <div class="intro-img-container">
-                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/49dc74cf-a14d-4e5f-8a85-050c7936d5b0/Godprat+Dante+og+Kjell.jpg" alt="IT-drift team" class="intro-img">
+                        <img src="bilder\Vancouver-Cyber-Security.jpg" alt="Cybersikkerhet" class="intro-img">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- What is IT-Management Section -->
-        <section class="team-section">
-            <div class="container">
-                <div class="team-grid">
-                    <div class="team-image">
-                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/a7261fea-23da-4749-b554-27a08160e2d5/Whiteboard+Dante.jpg" alt="IT planning">
-                    </div>
-                    <div class="team-content">
-                        <h3>Hva er <span>IT-drift?</span></h3>
-                        <p>IT-drift handler om å holde systemene dine i gang, sikre at alt er oppdatert og beskytte deg mot trusler. Det betyr at vi overvåker, fikser feil og gir support når du trenger det.</p>
-                        <p>Kort sagt, vi passer på at IT-en din alltid er i toppform, slik at du slipper nedetid, sikkerhetsrisikoer og frustrerte ansatte.</p>
-                        <p>Med vår proaktive tilnærming identifiserer vi potensielle problemer før de oppstår, og våre eksperter er alltid beredt til å hjelpe når du trenger det.</p>
-                    </div>
+        <!-- What is Cybersecurity Section -->
+        <section id="what-is" class="what-is-section">
+            <div class="container what-is-container">
+                <div class="what-is-content">
+                    <h2>Hva er cybersikkerhet?</h2>
+                    <p>Cybersikkerhet omfatter teknologier, prosesser og praksis designet for å beskytte nettverk, enheter, programmer og data fra angrep, skade eller uautorisert tilgang. I dagens digitale landskap er cybersikkerhet ikke bare et teknisk spørsmål, men en kritisk forretningsfunksjon.</p>
+                    <p>Effektiv cybersikkerhet krever en lagdelt tilnærming som omfatter både tekniske løsninger og menneskelig bevissthet. Dette inkluderer beskyttelse mot trusler som phishing, malware, ransomware, og avanserte vedvarende trusler (APTs).</p>
+                    <p>Med økende regulatoriske krav som GDPR og NIS2-direktivet, er sikkerhetsetterlevelse også blitt en vesentlig del av en helhetlig sikkerhetsstrategi. Ved å implementere robuste sikkerhetstiltak kan virksomheter ikke bare beskytte seg mot trusler, men også bygge tillit hos kunder og partnere.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section class="services-section" id="tjenester">
-            <div class="container">
-                <div class="services-grid">
-                    <div class="services-header">
-                        <h2>Noe av det vi kan levere innen IT-drift</h2>
-                        <p>Vi tilbyr et bredt spekter av IT-driftstjenester for å sikre at din virksomhet fungerer optimalt.</p>
-                    </div>
-                    
-                    <div class="service-item large animation-float">
-                        <div class="service-icon">
-                            <i class="fas fa-desktop"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Overvåking og vedlikehold</h3>
-                            <p>Vi følger med på systemene dine døgnet rundt og sørger for at alt går som det skal. Hvis noe er i ferd med å gå galt, fikser vi det før det blir et problem. Våre avanserte overvåkingsverktøy oppdager potensielle problemer tidlig, slik at vi kan løse dem proaktivt og minimere risikoen for nedetid.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="service-item medium animation-float delay-1">
-                        <div class="service-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Support</h3>
-                            <p>Våre dyktige IT-konsulenter står alltid klar for å hjelpe dere om teknologien mot formodning skulle streike. Vi tilbyr support via telefon, e-post og fjerntilgang for rask problemløsning.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="service-item medium animation-float delay-2">
-                        <div class="service-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Sikkerhet og back-up</h3>
-                            <p>Vi beskytter virksomheten din med brannmurer, antivirus og sikkerhetskopiering – så du slipper å miste viktige data. Våre sikkerhetsløsninger oppdateres kontinuerlig for å beskytte mot de nyeste truslene.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="service-item small animation-float">
-                        <div class="service-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>On-prem og cloud serverdrift</h3>
-                            <p>Vi leverer stabile og skalerbare IT-løsninger, enten lokalt, i skyen eller som en hybrid løsning med høy ytelse og fleksibilitet.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="service-item small animation-float delay-1">
-                        <div class="service-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Nettverk</h3>
-                            <p>Vi kan levere løsninger for nettverk og tar oss av driften av nettverksutstyret. Vi monitorerer utstyret og agerer på eventuelle problemer.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="service-item small animation-float delay-2">
-                        <div class="service-icon">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Utrulling og oppdatering</h3>
-                            <p>Vi håndterer installasjoner, oppgraderinger og oppdateringer av programvare og maskinvare for å holde systemene dine oppdaterte og sikre.</p>
-                        </div>
-                    </div>
+<!-- Service Items Section - uten de ekstra bildene -->
+<section id="tjenester" class="services-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Våre sikkerhetstjenester</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-item animation-float">
+                <div class="service-icon">
+                    <i class="fas fa-shield-alt"></i>
                 </div>
+                <h3>Penetrasjonstesting</h3>
+                <p>Vi gjennomfører grundige penetrasjonstester for å identifisere sårbarheter i dine systemer før angripere finner dem. Vår simulerte hacking avdekker sikkerhetshull og gir konkrete anbefalinger for utbedring.</p>
             </div>
-        </section>
-
-        <!-- Features Section (Why Choose Us) -->
-        <section class="features-section" id="fordeler">
-            <div class="container">
-                <div class="features-heading">
-                    <span class="section-subtitle">Hvorfor velge oss</span>
-                    <h2>Hvorfor skal dere velge oss som <span class="text-primary">IT-partner</span>?</h2>
-                    <p>Vi skiller oss ut med fokus på langsiktig verdi og proaktiv service</p>
+            
+            <div class="service-item animation-float delay-1">
+                <div class="service-icon">
+                    <i class="fas fa-lock"></i>
                 </div>
-                
-                <div class="features-wrapper">
-                    <div class="feature-box">
-                        <div class="feature-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Hjelp når du trenger det</h4>
-                            <p>Våre IT-eksperter er bare en telefon eller e-post unna, og er alltid klar til å hjelpe.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-box">
-                        <div class="feature-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Ting bare fungerer</h4>
-                            <p>Vi fikser problemer før du merker dem og holder systemene dine i optimal stand.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-box">
-                        <div class="feature-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Økt sikkerhet</h4>
-                            <p>Vi beskytter dine data med de nyeste sikkerhetsløsningene mot dagens trusler.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-box">
-                        <div class="feature-icon">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Forutsigbare kostnader</h4>
-                            <p>Med faste avtaler slipper du uforutsette IT-utgifter og får bedre budsjettforutsigbarhet.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-box">
-                        <div class="feature-icon">
-                            <i class="fas fa-handshake"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Langvarige relasjoner</h4>
-                            <p>Vi er her for å bygge langvarige relasjoner og virkelig skape verdi for kundene våre.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-box">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Vekst og skalering</h4>
-                            <p>Våre løsninger vokser med din bedrift og tilpasses dine skiftende behov.</p>
-                        </div>
-                    </div>
-                </div>
+                <h3>Sikkerhetsovervåkning</h3>
+                <p>Vårt sikkerhetssenter (SOC) overvåker dine systemer døgnet rundt for å oppdage og håndtere sikkerhetshendelser før de utvikler seg til alvorlige brudd. Vi benytter avansert teknologi for å sikre rask respons.</p>
             </div>
-        </section>
+            
+            <div class="service-item animation-float delay-2">
+                <div class="service-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3>Sikkerhetsbevisstgjøring</h3>
+                <p>Den menneskelige faktoren er ofte det svakeste leddet i sikkerhetskjeden. Vi tilbyr omfattende opplæringsprogrammer for å styrke sikkerhetskultur og redusere risikoen for menneskelige feil.</p>
+            </div>
+            
+            <div class="service-item animation-float">
+                <div class="service-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <h3>Etterlevelse og styring</h3>
+                <p>Vi hjelper din virksomhet med å oppfylle regulatoriske krav som GDPR, NIS2 og ISO27001. Våre tjenester inkluderer risikovurderinger, gap-analyser og implementering av styringssystemer for informasjonssikkerhet.</p>
+            </div>
+            
+            <div class="service-item animation-float delay-1">
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Sikker applikasjonsutvikling</h3>
+                <p>Vi implementerer sikkerhet gjennom hele utviklingssyklusen med vår DevSecOps-tilnærming. Dette inkluderer kodegjennomgang, sikkerhetsarkitektur og automatisert sikkerhetstesting for å bygge robuste applikasjoner.</p>
+            </div>
+            
+            <div class="service-item animation-float delay-2">
+                <div class="service-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Hendelseshåndtering</h3>
+                <p>Vårt ekspertteam står klare til å håndtere sikkerhetshendelser når de oppstår. Vi tilbyr rask respons, rotårsaksanalyse og bidrar til å gjenopprette normal drift så raskt som mulig etter et sikkerhetsbrudd.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
+       <!-- Features Section (Benefits) - uten de ekstra bildene -->
+<section class="features-section" id="fordeler">
+    <div class="container">
+        <div class="section-title">
+            <h2>Fordeler med våre sikkerhetstjenester</h2>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h4>Pålitelig beskyttelse</h4>
+                <p>Våre sikkerhetstjenester gir robust beskyttelse mot et bredt spekter av trusler, fra tradisjonelle angrep til avanserte trusler og zero-day-sårbarheter.</p>
+            </div>
+            
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h4>Sertifiserte eksperter</h4>
+                <p>Vårt team består av sertifiserte sikkerhetseksperter med omfattende erfaring fra både offentlig og privat sektor. Vi holder oss konstant oppdatert på nye trusler og teknologier.</p>
+            </div>
+            
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h4>Proaktiv tilnærming</h4>
+                <p>Vi jobber proaktivt for å identifisere og adressere sårbarheter før de kan utnyttes, noe som reduserer risikoen for kostbare sikkerhetsbrudd og nedetid.</p>
+            </div>
+            
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h4>Kontinuerlig forbedring</h4>
+                <p>Våre sikkerhetstjenester utvikles kontinuerlig for å møte nye trusler og utfordringer. Vi analyserer trender og justerer våre løsninger basert på nye innsikter.</p>
+            </div>
+            
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-search-dollar"></i>
+                </div>
+                <h4>Kostnadseffektiv sikkerhet</h4>
+                <p>Ved å forebygge sikkerhetsbrudd sparer virksomheten betydelige kostnader knyttet til datarestaurering, omdømmetap og potensielle bøter for manglende etterlevelse.</p>
+            </div>
+            
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h4>Strategisk partnerskap</h4>
+                <p>Vi fungerer som din strategiske partner innen cybersikkerhet og hjelper din bedrift med å navigere et stadig mer komplekst trusselbilde på en trygg og effektiv måte.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        
         <!-- Contact Section -->
-        <section class="contact-section" id="kontakt">
+        <section id="kontakt" class="contact-section">
             <div class="container">
+                <div class="section-title">
+                    <h2>Ta kontakt for en sikkerhetsvurdering</h2>
+                </div>
                 <div class="contact-grid">
-                    <div class="contact-content">
-                        <h2>Ønsker du hjelp med drift av dine IT-løsninger?</h2>
-                        <div class="contact-info">
-                            <p>hi@cipher.no</p>
-                            <p>+47 56 1234 65</p>
-                            <p>Nøstegaten 58, 5011 Bergen</p>
+                    <div class="contact-info">
+                        <h3>La oss hjelpe deg med å styrke din sikkerhet</h3>
+                        <p>Kontakt oss for en uforpliktende samtale om hvordan vi kan hjelpe din bedrift med å forbedre sikkerheten og beskytte dine digitale verdier. Vi tilbyr også gratis innledende sikkerhetsvurderinger for nye kunder.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h5>Besøk oss</h5>
+                                    <a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank" rel="noopener">Nøstegaten 58, 5011 Bergen</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h5>Ring oss</h5>
+                                    <a href="tel:+4756123465">+47 56 12 34 65</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h5>Send e-post</h5>
+                                    <a href="mailto:hi@cipher.no">hi@cipher.no</a>
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="contact-social">
-                            <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
                         </div>
                     </div>
                     
@@ -1347,18 +1360,18 @@
                         <h3>Send oss en melding</h3>
                         <form id="contactForm">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Fornavn" required>
+                                <input type="text" class="form-control" placeholder="Ditt navn" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Etternavn" required>
+                                <input type="email" class="form-control" placeholder="Din e-post" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="E-post" required>
+                                <input type="text" class="form-control" placeholder="Emne">
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Hva kan vi hjelpe deg med?" rows="5" required></textarea>
+                                <textarea class="form-control" placeholder="Din melding" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary">Send melding</button>
                         </form>
                     </div>
                 </div>
@@ -1372,7 +1385,7 @@
             <div class="footer-grid">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <img src="https://images.squarespace-cdn.com/content/v1/65e82ccad2860c67e0bf3885/79f2d4d9-d33f-46de-852e-30bb245fb615/Cipher-logo-negativ+%283%29.png" alt="Cipher Logo">
+                        <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
                     </div>
                     <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
                     <div class="footer-social">
@@ -1384,21 +1397,21 @@
                 <div class="footer-links-column">
                     <h5 class="footer-title">Tjenester</h5>
                     <ul class="footer-links">
-                        <li><a href="/it-drift">IT-drift</a></li>
-                        <li><a href="/sikkerhetstjenester">Sikkerhetstjenester</a></li>
-                        <li><a href="/skytjenester">Skytjenester</a></li>
-                        <li><a href="/innsiktoganalyse">Innsikt og analyse</a></li>
-                        <li><a href="/strategisk-it-radgivning">Strategisk IT-rådgivning</a></li>
+                        <li><a href="it-drift.html">IT-drift</a></li>
+                        <li><a href="sikkerhetstjenester.html">Sikkerhetstjenester</a></li>
+                        <li><a href="skytjenester.html">Skytjenester</a></li>
+                        <li><a href="innsiktoganalyse.html">Innsikt og analyse</a></li>
+                        <li><a href="strategisk-it-radgivning.html">Strategisk IT-rådgivning</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links-column">
                     <h5 class="footer-title">Snarveier</h5>
                     <ul class="footer-links">
-                        <li><a href="/">Hjem</a></li>
-                        <li><a href="/#tjenester">Tjenester</a></li>
-                        <li><a href="/om-cipher">Om oss</a></li>
-                        <li><a href="/kontakt">Kontakt</a></li>
+                        <li><a href="index.html">Hjem</a></li>
+                        <li><a href="index.html#tjenester">Tjenester</a></li>
+                        <li><a href="om.html">Om oss</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
                     </ul>
                 </div>
                 

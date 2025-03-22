@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="no-NO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt oss | Cipher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F5A28C; /* Oransj */
+            --primary-dark: #E07E68; /* Mørkere oransj */
+            --primary-light: #FFCEBF; /* Lysere oransj */
+            --secondary: #212338; /* Mørkeblå - primærfarge */
+            --secondary-dark: #171828; /* Mørkere blå */
+            --secondary-light: #353756; /* Lysere blå */
+            --secondary-lighter: #404466; /* Enda lysere blå */
+            --dark: #171721;
+            --light: #F8F9FA;
+            --gray: #6c757d;
+            --light-gray: #F2F2F2;
+            --white: #FFFFFF;
+            --gradient-blue: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-orange: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --background: #2A2C44; /* Lysere bakgrunn enn original */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Digital particles animation */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+    
+        .particle {
+            position: absolute;
+            display: block;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .big-paragraph {
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 4px 14px rgba(245, 162, 140, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 162, 140, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-light);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(21, 23, 38, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(21, 23, 38, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rounded-corners {
+            border-radius: 20px;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .z-index-10 {
+            z-index: 10;
+        }
+        
+        /* Animated decoration */
+        .animated-shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(245, 162, 140, 0.2), transparent 70%);
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape1 {
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            bottom: -150px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.05);
+            }
+        }
+        
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(42, 44, 68, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(42, 44, 68, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 35px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+        
+        .header-cta {
+            margin-left: 30px;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 180px 0 80px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--background);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .page-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+            color: var(--secondary);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--secondary);
+            position: relative;
+        }
+        
+        .contact-info h3::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .contact-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(245, 162, 140, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            background-color: var(--primary);
+            color: var(--secondary);
+            transform: rotateY(180deg);
+        }
+        
+        .contact-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .contact-details p {
+            color: rgba(33, 35, 56, 0.7);
+            font-size: 1rem;
+        }
+        
+        .contact-form {
+            background-color: var(--light-gray);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(33, 35, 56, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--secondary);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 162, 140, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Careers Section */
+        .careers {
+            padding: 100px 0;
+            background-color: var(--background);
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-subtitle {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .careers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .careers-content {
+            max-width: 600px;
+        }
+
+        .careers-image {
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: all 0.3s ease;
+        }
+
+        .careers-image:hover {
+            transform: perspective(1000px) rotateY(0) rotateX(0);
+        }
+
+        .careers-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .careers-cta {
+            margin: 30px 0;
+        }
+
+        .service-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .service-badge {
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-badge:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            color: var(--secondary);
+        }
+        
+        /* Map Section */
+        .map-section {
+            padding: 0;
+            position: relative;
+            height: 500px;
+            background-color: var(--light-gray);
+        }
+        
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 35px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--secondary);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 5;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--secondary-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item.active {
+            color: var(--primary);
+            background-color: rgba(245, 162, 140, 0.1);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1, .page-title {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-grid,
+            .careers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info h3::after,
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .contact-info,
+            .careers-content {
+                text-align: center;
+                margin: 0 auto;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .careers-cta {
+                justify-content: center;
+                display: flex;
+            }
+            
+            .service-badges {
+                justify-content: center;
+            }
+            
+            .careers-image {
+                margin-top: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--secondary);
+                flex-direction: column;
+                transition: all 0.4s ease;
+                padding: 40px;
+                z-index: 99;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-item {
+                margin: 0 0 20px;
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 10px 0;
+                font-size: 1.1rem;
+            }
+            
+            .header-cta {
+                margin: 20px 0 0;
+                width: 100%;
+            }
+            
+            .header-cta .btn {
+                width: 100%;
+            }
+            
+            .page-header {
+                padding: 120px 0 60px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .animated-shape {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Hjem</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link">Våre tjenester</a>
+                        <div class="dropdown-content">
+                            <a href="it-drift.html" class="dropdown-item">IT-drift</a>
+                            <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
+                            <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
+                            <a href="innsiktoganalyse.html" class="dropdown-item">Innsikt og analyse</a>
+                            <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="om.html" class="nav-link">Om oss</a></li>
+                    <li class="nav-item"><a href="kontakt.html" class="nav-link active">Kontakt</a></li>
+                    <li class="nav-item"><a href="#karriere" class="nav-link">Karriere</a></li>
+                </ul>
+                <a href="#kontakt-skjema" class="btn btn-primary header-cta">Kontakt oss</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="animated-shape shape1"></div>
+            <div class="animated-shape shape2"></div>
+            <div class="container">
+                <div class="page-header-content">
+                    <h1 class="page-title">Kontakt <span class="text-primary">Cipher</span></h1>
+                    <p class="page-subtitle">Vi hjelper deg med å løse dine digitale utfordringer. Ta kontakt for en uforpliktende prat.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="kontakt-skjema">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Ta kontakt med oss</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Vårt kontor</h4>
+                                <p>Nøstegaten 58, 5011 Bergen, Norge</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Telefon</h4>
+                                <p>+47 56 12 34 65</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>E-post</h4>
+                                <p>hi@cipher.no</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Åpningstider</h4>
+                                <p>Mandag - Fredag: 08:00 - 16:00</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send oss en melding</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Navn</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-post</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Emne</label>
+                                <input type="text" id="subject" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label">Melding</label>
+                                <textarea id="message" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send melding</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Careers Section -->
+        <section class="careers" id="karriere">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="section-subtitle">Karriere</span>
+                    <h2>Vi skal vokse</h2>
+                </div>
+                
+                <div class="careers-grid">
+                    <div class="careers-content">
+                        <p class="big-paragraph">Er du nyutdannet og sulten på erfaring eller ønsker nye utfordringer? Vi søker unge og eldre digitale talenter. Nøkkelord for egenskaper og interesser kan være <span class="text-primary">#mennesker, #prosess, #strategi, #cloud, #kubernetes, #Azure, #endring, #arkitektur</span> mm. Tenker du at dette passer for deg så send oss en e-post med kortfattet informasjon og CV.</p>
+                        
+                        <p class="big-paragraph">Vi vil at mennesker som jobber hos Cipher ønsker å tilhøre noe større enn seg selv. At man ønsker å gjøre arbeid som gjør en forskjell. Cipher-ansatte er ydmyke, kreative, innovative, samarbeidsvillige, smidige, kundesentriske, blendende smarte og morsomme å være sammen med.</p>
+                        
+                        <div class="careers-cta">
+                            <a href="mailto:hi@cipher.no" class="btn btn-primary">Send oss din CV</a>
+                        </div>
+                        
+                        <!-- Skills Tags -->
+                        <div class="service-badges">
+                            <span class="service-badge">#mennesker</span>
+                            <span class="service-badge">#prosess</span>
+                            <span class="service-badge">#strategi</span>
+                            <span class="service-badge">#cloud</span>
+                            <span class="service-badge">#kubernetes</span>
+                            <span class="service-badge">#Azure</span>
+                            <span class="service-badge">#endring</span>
+                            <span class="service-badge">#arkitektur</span>
+                        </div>
+                    </div>
+                    
+                    <div class="careers-image">
+                        <img src="bilder/Bordtennis+Kristi+og+Kjell+2.png" alt="Cipher team samarbeider">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1971.4442735832447!2d5.322258616259644!3d60.3921262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x463cf9437d397c3b%3A0xac5e01e6db6cb553!2sN%C3%B8stegaten%2058%2C%205011%20Bergen!5e0!3m2!1sno!2sno!4v1679915430800!5m2!1sno!2sno" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
+                    </div>
+                    <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Tjenester</h5>
+                    <ul class="footer-links">
+                        <li><a href="it-drift.html">IT-drift</a></li>
+                        <li><a href="sikkerhetstjenester.html">Sikkerhetstjenester</a></li>
+                        <li><a href="skytjenester.html">Skytjenester</a></li>
+                        <li><a href="strategisk-it-radgivning.html">Strategisk IT-rådgivning</a></li>
+                        <li><a href="innsiktoganalyse.html">Datainnsikt og analyse</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Snarveier</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Hjem</a></li>
+                        <li><a href="om.html">Om oss</a></li>
+                        <li><a href="#karriere">Karriere</a></li>
+                        <li><a href="#kontakt-skjema">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h5 class="footer-title">Kontakt</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank" rel="noopener">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
+                        <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Cipher Norge AS. Alle rettigheter reservert.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Sticky Header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile Dropdown Toggle
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+            }
+        });
+        
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the form data to a server
+                // For now, we'll just simulate a success message
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message
+                alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -209,6 +209,7 @@
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
         
@@ -1067,6 +1068,52 @@
                 display: none;
             }
         }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--secondary);
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 5;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--secondary-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item.active {
+            color: var(--primary);
+            background-color: rgba(245, 162, 140, 0.1);
+        }
     </style>
 </head>
 
@@ -1085,11 +1132,23 @@
             
             <nav class="nav-menu">
                 <ul class="nav-list">
-                  <li class="nav-item"><a href="index.html" class="nav-link">Hjem</a></li>
-                  <li class="nav-item"><a href="om.html" class="nav-link">Om oss</a></li>
-                  <li class="nav-item"><a href="it-drift.html" class="nav-link">IT-drift</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link active">Hjem</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link">Våre tjenester</a>
+                        <div class="dropdown-content">
+                            <a href="it-drift.html" class="dropdown-item">IT-drift</a>
+                            <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
+                            <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
+                            <a href="innsikt.html" class="dropdown-item">Innsikt og analyse</a>
+                            <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="om.html" class="nav-link">Om oss</a></li>
+                    <li class="nav-item"><a href="#kontakt" class="nav-link">Kontakt</a></li>
+                    <li class="nav-item"><a href="kontakt.html#karriere" class="nav-link">Karriere</a></li>
                 </ul>
-              </nav>
+                <a href="#kontakt" class="btn btn-primary header-cta">Kontakt oss</a>
+            </nav>
         </div>
     </header>
 
@@ -1138,7 +1197,7 @@
                         </div>
                         <h3 class="service-title">IT-drift</h3>
                         <p class="service-description">Vi tar hånd om IT-løsningene dine. Du trenger ikke å bekymre deg for stabilitet, sikkerhet eller nedetid. Våre eksperter sørger for at alt tikker og går som det skal, slik at du kan fokusere på kjernevirksomheten din.</p>
-                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                        <a href="it-drift.html" class="btn btn-outline">Les mer</a>
                     </div>
                     
                     <div class="service-card" id="skytjenester">
@@ -1147,7 +1206,7 @@
                         </div>
                         <h3 class="service-title">Skytjenester</h3>
                         <p class="service-description">Vi leverer sikre og skalerbare skytjenester som gir virksomheten din økt fleksibilitet og reduserte kostnader. Våre løsninger er alltid oppdaterte, tilgjengelige og enkle å skalere etter behov.</p>
-                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                        <a href="skytjenester.html" class="btn btn-outline">Les mer</a>
                     </div>
                     
                     <div class="service-card" id="sikkerhet">
@@ -1156,7 +1215,7 @@
                         </div>
                         <h3 class="service-title">Sikkerhetstjenester</h3>
                         <p class="service-description">Vi tilbyr sikkerhetstjenester som kombinerer robuste tekniske løsninger med strategisk rådgivning. Våre eksperter hjelper deg med å identifisere risikoer, implementere effektive tiltak og bygge en helhetlig sikkerhetsstrategi.</p>
-                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                        <a href="sikkerhetstjenester.html" class="btn btn-outline">Les mer</a>
                     </div>
                     
                     <div class="service-card" id="radgivning">
@@ -1165,7 +1224,7 @@
                         </div>
                         <h3 class="service-title">Strategisk IT-rådgivning</h3>
                         <p class="service-description">Vi leverer strategisk IT-rådgivning som hjelper deg å ta informerte teknologivalg. Våre eksperter bidrar til å forme en bærekraftig digital strategi som støtter vekst og innovasjon.</p>
-                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                        <a href="strategisk-it-radgivning.html" class="btn btn-outline">Les mer</a>
                     </div>
                     
                     <div class="service-card" id="innsikt">
@@ -1174,7 +1233,7 @@
                         </div>
                         <h3 class="service-title">Datainnsikt og analyse</h3>
                         <p class="service-description">Vi hjelper deg med å omdanne data til verdifull innsikt. Med våre tjenester får du verktøyene og ekspertisen du trenger for å ta bedre beslutninger, identifisere muligheter og drive virksomheten din fremover.</p>
-                        <a href="#kontakt" class="btn btn-outline">Les mer</a>
+                        <a href="innsikt.html" class="btn btn-outline">Les mer</a>
                     </div>
                 </div>
             </div>
@@ -1327,8 +1386,8 @@
                     </div>
                     <p>Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.</p>
                     <div class="footer-social">
-                        <a href="https://www.linkedin.com/company/cipher-norge-as/"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.instagram.com/ciphernorge/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 
@@ -1351,13 +1410,14 @@
                         <li><a href="#om-oss">Om oss</a></li>
                         <li><a href="#hvorfor-oss">Hvorfor velge oss</a></li>
                         <li><a href="#kontakt">Kontakt</a></li>
+                        <li><a href="kontakt.html#karriere">Karriere</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links-column">
                     <h5 class="footer-title">Kontakt</h5>
                     <ul class="footer-links">
-                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47">Nøstegaten 58, 5011 Bergen</a></li>
+                        <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank" rel="noopener">Nøstegaten 58, 5011 Bergen</a></li>
                         <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
                         <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
                     </ul>
@@ -1374,7 +1434,7 @@
     <script>
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
+        const navMenu = document.querySelector('.nav-menu');
         
         menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
@@ -1392,31 +1452,34 @@
             }
         });
         
-        // Smooth Scrolling for Anchor Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (!targetElement) return;
-                
-                // Close mobile menu if open
-                if (navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        // Mobile Dropdown Toggle
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
                 }
-                
-                const headerHeight = document.getElementById('header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
             });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+            }
         });
         
         // Active Navigation Link
@@ -1463,59 +1526,10 @@
                 // Reset form
                 contactForm.reset();
                 
-                // Show success message (you can customize this)
+                // Show success message
                 alert('Takk for din henvendelse! Vi vil kontakte deg snart.');
             });
         }
-
-        // Reset code animation periodically
-        setInterval(() => {
-            document.querySelectorAll('.code-line').forEach(line => {
-                line.style.animation = 'none';
-                setTimeout(() => {
-                    line.style.animation = '';
-                }, 50);
-            });
-        }, 12000); // Restart animation every 12 seconds
-        
-        // Create particles for About section
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth > 768 ? 20 : 10;
-            
-            // Clear existing particles
-            particlesContainer.innerHTML = '';
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random properties
-                const size = Math.random() * 8 + 2; // 2-10px
-                const posX = Math.random() * 100; // 0-100%
-                const posY = Math.random() * 100; // 0-100%
-                const opacity = Math.random() * 0.3 + 0.1; // 0.1-0.4
-                const duration = Math.random() * 20 + 10; // 10-30s
-                const delay = Math.random() * 5; // 0-5s
-                
-                // Apply styles
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.opacity = opacity;
-                particle.style.animationDuration = `${duration}s`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
-                
-                // Add particle to container
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // Initialize particles
-        window.addEventListener('load', createParticles);
-        window.addEventListener('resize', createParticles);
     </script>
 </body>
 </html>

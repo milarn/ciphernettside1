@@ -189,6 +189,7 @@
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       transition: all 0.3s ease;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
 
@@ -268,7 +269,49 @@
       font-size: 1.5rem;
     }
 
-    /* Hero Section - Fra omvifinal.html */
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--secondary);
+      min-width: 220px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 10;
+      padding: 10px 0;
+      margin-top: 10px;
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: block;
+      padding: 12px 20px;
+      color: var(--white);
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--secondary-light);
+      color: var(--primary);
+      padding-left: 25px;
+    }
+
+    /* Hero Section */
     .hero {
       padding: 180px 0 100px;
       position: relative;
@@ -413,7 +456,7 @@
       z-index: 1;
     }
 
-    /* Philosophy Section - Fra omvifinal.html */
+    /* Philosophy Section */
     .philosophy {
       padding: 120px 0 80px;
       background-color: var(--white);
@@ -539,82 +582,35 @@
       color: var(--primary);
     }
 
-    /* Stats Section */
-    .stats {
-      padding: 80px 0;
-      background-color: var(--primary);
-      color: var(--secondary-dark);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stats::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent 70%);
-    }
-
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .stat-item {
-      padding: 30px 20px;
-      position: relative;
-    }
-
-    .stat-item::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 3px;
-      background-color: rgba(33, 35, 56, 0.2);
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .stat-item:hover::after {
-      width: 80px;
-      background-color: var(--secondary);
-    }
-
-    .stat-number {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      line-height: 1;
-      transition: all 0.3s ease;
-    }
-
-    .stat-item:hover .stat-number {
-      transform: scale(1.1);
-    }
-
-    .stat-text {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--secondary);
-    }
-
-    /* Team Section - Fra omviv2.html */
+    /* Team Section */
     .team {
       padding: 100px 0;
       background-color: var(--background);
       position: relative;
       z-index: 2;
       color: var(--white);
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-description {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      opacity: 0.9;
     }
 
     .team-grid {
@@ -675,7 +671,7 @@
     }
 
     .team-member-position {
-      color: var(/* Team Section - Fra omviv2.html */--primary);
+      color: var(--primary);
       font-size: 1rem;
       margin-bottom: 15px;
       display: block;
@@ -704,7 +700,7 @@
       text-align: center;
     }
 
-    /* Values & Culture Section - Fra omviv2.html */
+    /* Values & Culture Section */
     .values {
       padding: 100px 0;
       background-color: var(--white);
@@ -786,7 +782,7 @@
       font-size: 1rem;
     }
 
-    /* Footer - Fra omviv2.html */
+    /* Footer */
     .footer {
       background-color: var(--secondary-dark);
       color: var(--white);
@@ -915,10 +911,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .stats-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
       .values-row {
         flex-wrap: wrap;
       }
@@ -927,6 +919,11 @@
         grid-template-columns: 1fr 1fr;
         text-align: center;
         gap: 30px;
+      }
+
+      .footer-title::after {
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       .footer-social {
@@ -975,6 +972,31 @@
         display: block;
         padding: 10px 0;
         font-size: 1.1rem;
+      }
+
+      .dropdown-content {
+        position: static;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding: 0;
+        margin: 10px 0 0 20px;
+        display: none;
+      }
+
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-item {
+        padding: 10px 0;
+      }
+
+      .dropdown-item:hover {
+        background: none;
+        padding-left: 5px;
       }
 
       .header-cta {
@@ -1026,7 +1048,7 @@
   </style>
 </head>
 <body>
-  <!-- Header - Fra omvifinal.html -->
+  <!-- Header -->
   <header class="header" id="header">
     <div class="container header-container">
       <div class="logo">
@@ -1034,35 +1056,34 @@
           <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
         </a>
       </div>
-      <button class="mobile-toggle" id="menuToggle">
+      <button class="mobile-toggle" id="menuToggle" aria-label="Åpne/lukke meny">
         <i class="fas fa-bars"></i>
       </button>
       <nav class="nav-menu" id="navMenu">
         <ul class="nav-list">
-          <li class="nav-item">
-            <a href="lsada.html" class="nav-link">Hjem</a>
+          <li class="nav-item"><a href="index.html" class="nav-link">Hjem</a></li>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link dropdown-toggle">Våre tjenester <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i></a>
+            <div class="dropdown-content">
+              <a href="it-drift.html" class="dropdown-item">IT-drift</a>
+              <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
+              <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
+              <a href="innsiktoganalyse.html" class="dropdown-item">Innsikt og analyse</a>
+              <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
+            </div>
           </li>
-          <li class="nav-item">
-            <a href="lsada.html#tjenester" class="nav-link">Tjenester</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active">Om oss</a>
-          </li>
-          <li class="nav-item">
-            <a href="lsada.html#hvorfor-oss" class="nav-link">Hvorfor velge oss</a>
-          </li>
-          <li class="nav-item">
-            <a href="lsada.html#kontakt" class="nav-link">Kontakt</a>
-          </li>
+          <li class="nav-item"><a href="om.html" class="nav-link active">Om oss</a></li>
+          <li class="nav-item"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
+          <li class="nav-item"><a href="kontakt.html#karriere" class="nav-link">Karriere</a></li>
         </ul>
-        <a href="lsada.html#kontakt" class="btn btn-primary header-cta">Kontakt oss</a>
+        <a href="kontakt.html" class="btn btn-primary header-cta">Kontakt oss</a>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
   <main>
-    <!-- Hero Section - Fra omvifinal.html -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
       <div class="container hero-container">
         <h1 class="hero-title">Om <span class="text-primary">Cipher</span></h1>
@@ -1106,23 +1127,23 @@
       </div>
     </section>
     
-    <!-- Diagonal Banner - Fra omvifinal.html -->
+    <!-- Diagonal Banner -->
     <div class="diagonal-banner">
       <div class="diagonal-container">
         <div class="diagonal"></div>
       </div>
     </div>
 
-    <!-- Philosophy Section - Fra omvifinal.html -->
+    <!-- Philosophy Section -->
     <section class="philosophy" id="our-philosophy">
       <div class="container">
         <div class="philosophy-grid">
           <div class="philosophy-image">
-            <img src="bilder\Bordtennis+Kristi+og+Kjell+2.png" alt="Cipher team i arbeid">
+            <img src="bilder/Bordtennis+Kristi+og+Kjell+2.png" alt="Cipher team i arbeid">
           </div>
           
           <div class="philosophy-content">
-            <span class="section-label">Vår filosofi</span>
+            <span class="section-label">Our reason to be</span>
             <h2 class="philosophy-title">Vi gjør teknologi <span class="text-primary">enkelt og verdifullt</span></h2>
             
             <p class="philosophy-paragraph">
@@ -1161,31 +1182,7 @@
       </div>
     </section>
 
-    <!-- Stats Section - Fra omvifinal.html -->
-    <section class="stats">
-      <div class="container">
-        <div class="stats-container">
-          <div class="stat-item">
-            <div class="stat-number" data-count="14">0</div>
-            <div class="stat-text">Team medlemmer</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-count="50">0</div>
-            <div class="stat-text">Fornøyde kunder</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-count="5">0</div>
-            <div class="stat-text">Tjenester</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-count="100">0</div>
-            <div class="stat-text">% Engasjement</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Team Section - Fra omviv2.html -->
+    <!-- Team Section -->
     <section class="team" id="team">
       <div class="container">
         <div class="section-heading">
@@ -1436,11 +1433,71 @@
               </div>
             </div>
           </div>
+          <!-- Team Member 13 (Added) -->
+          <div class="team-member">
+            <div class="team-member-image">
+              <img src="bilder/phillip.jpg" alt="Phillip Daae">
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">Phillip Daae</h3>
+              <span class="team-member-position">IT-konsulent (Lærling)</span>
+              <div class="team-member-contact">
+                <a href="tel:+4799349810">
+                  <i class="fas fa-phone-alt"></i>
+                  <span>+47 993 49 810</span>
+                </a>
+                <a href="mailto:phillip.daae@cipher.no">
+                  <i class="fas fa-envelope"></i>
+                  <span>phillip.daae@cipher.no</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Team Member 14 (Added) -->
+          <div class="team-member">
+            <div class="team-member-image">
+              <img src="bilder/Anders.jpg" alt="Anders Bjånesøy">
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">Anders Bjånesøy</h3>
+              <span class="team-member-position">Seniorkonsulent</span>
+              <div class="team-member-contact">
+                <a href="tel:+4798008786">
+                  <i class="fas fa-phone-alt"></i>
+                  <span>+47 980 08 786</span>
+                </a>
+                <a href="mailto:ab@cipher.no">
+                  <i class="fas fa-envelope"></i>
+                  <span>ab@cipher.no</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Team Member 15 (Added) -->
+          <div class="team-member">
+            <div class="team-member-image">
+              <img src="bilder/Tord.jpg" alt="Tord Hansen">
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">Tord Hansen</h3>
+              <span class="team-member-position">Seniorkonsulent</span>
+              <div class="team-member-contact">
+                <a href="tel:+4795004059">
+                  <i class="fas fa-phone-alt"></i>
+                  <span>+47 950 04 059</span>
+                </a>
+                <a href="mailto:tord.hansen@cipher.no">
+                  <i class="fas fa-envelope"></i>
+                  <span>tord.hansen@cipher.no</span>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Values & Culture Section - Fra omviv2.html -->
+    <!-- Values & Culture Section -->
     <section class="values" id="values">
       <div class="container">
         <div class="section-heading">
@@ -1483,7 +1540,7 @@
     </section>
   </main>
 
-  <!-- Footer - Fra omviv2.html -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -1495,34 +1552,34 @@
             Vi hjelper virksomheter med å sikre digital infrastruktur, implementere skyløsninger og optimalisere IT-drift på en måte som skaper varig verdi.
           </p>
           <div class="footer-social">
-            <a href="https://www.linkedin.com/company/cipher-norge-as/"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/ciphernorge/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/cipher-norge-as/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.instagram.com/ciphernorge/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
         <div class="footer-links-column">
           <h5 class="footer-title">Tjenester</h5>
           <ul class="footer-links">
-            <li><a href="lsada.html#it-drift">IT-drift</a></li>
-            <li><a href="lsada.html#skytjenester">Skytjenester</a></li>
-            <li><a href="lsada.html#sikkerhet">Sikkerhetstjenester</a></li>
-            <li><a href="lsada.html#radgivning">Strategisk IT-rådgivning</a></li>
-            <li><a href="lsada.html#innsikt">Datainnsikt og analyse</a></li>
+            <li><a href="it-drift.html">IT-drift</a></li>
+            <li><a href="sikkerhetstjenester.html">Sikkerhetstjenester</a></li>
+            <li><a href="skytjenester.html">Skytjenester</a></li>
+            <li><a href="innsiktoganalyse.html">Innsikt og analyse</a></li>
+            <li><a href="strategisk-it-radgivning.html">Strategisk IT-rådgivning</a></li>
           </ul>
         </div>
         <div class="footer-links-column">
           <h5 class="footer-title">Snarveier</h5>
           <ul class="footer-links">
-            <li><a href="lsada.html">Hjem</a></li>
-            <li><a href="lsada.html#tjenester">Tjenester</a></li>
-            <li><a href="#">Om oss</a></li>
-            <li><a href="lsada.html#hvorfor-oss">Hvorfor velge oss</a></li>
-            <li><a href="lsada.html#kontakt">Kontakt</a></li>
+            <li><a href="index.html">Hjem</a></li>
+            <li><a href="index.html#tjenester">Tjenester</a></li>
+            <li><a href="om.html">Om oss</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="kontakt.html#karriere">Karriere</a></li>
           </ul>
         </div>
         <div class="footer-links-column">
           <h5 class="footer-title">Kontakt</h5>
           <ul class="footer-links">
-            <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47">Nøstegaten 58, 5011 Bergen</a></li>
+            <li><a href="https://goo.gl/maps/bZVMgfbGGvZKUNc47" target="_blank" rel="noopener">Nøstegaten 58, 5011 Bergen</a></li>
             <li><a href="tel:+4756123465">+47 56 12 34 65</a></li>
             <li><a href="mailto:hi@cipher.no">hi@cipher.no</a></li>
           </ul>
@@ -1556,73 +1613,47 @@
       }
     });
     
-    // Smooth Scrolling for Anchor Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (!targetElement) return;
-        
-        if (navMenu.classList.contains('active')) {
-          navMenu.classList.remove('active');
-          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        }
-        
-        const headerHeight = document.getElementById('header').offsetHeight;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
+    // Mobile Dropdown Toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      // Handle dropdown on mobile
+      const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+      
+      if (window.innerWidth <= 768) {
+        dropdownToggles.forEach(toggle => {
+          toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            const parent = toggle.parentElement;
+            parent.classList.toggle('active');
+          });
+        });
+      }
+      
+      // Smooth Scrolling for Anchor Links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#' || targetId === 'javascript:void(0)') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (!targetElement) return;
+          
+          e.preventDefault();
+          
+          if (navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+          
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
         });
       });
     });
-    
-    // Animate counters
-    const counterElements = document.querySelectorAll('.stat-number');
-    const animateCounter = (el) => {
-      const target = parseInt(el.getAttribute('data-count'));
-      const duration = 2000;
-      const step = target / (duration / 16);
-      let current = 0;
-      
-      const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          clearInterval(timer);
-          el.textContent = target;
-        } else {
-          el.textContent = Math.floor(current);
-        }
-      }, 16);
-    };
-    
-    const isInViewport = (el) => {
-      const rect = el.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      );
-    };
-    
-    let hasAnimated = false;
-    window.addEventListener('scroll', () => {
-      if (!hasAnimated && counterElements.length > 0 && isInViewport(counterElements[0])) {
-        counterElements.forEach(animateCounter);
-        hasAnimated = true;
-      }
-    });
-    
-    if (counterElements.length > 0 && isInViewport(counterElements[0])) {
-      counterElements.forEach(animateCounter);
-      hasAnimated = true;
-    }
   </script>
 </body>
 </html>
