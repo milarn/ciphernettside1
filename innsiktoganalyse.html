@@ -246,6 +246,18 @@
         .nav-item {
             margin-left: 30px;
             position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Mobile Navigation Fixes */
+        @media (max-width: 768px) {
+            .dropdown-toggle {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
         
         .nav-link {
@@ -1191,7 +1203,10 @@
                         <a href="index.html" class="nav-link">Hjem</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link">Våre tjenester</a>
+                        <a href="#" class="nav-link dropdown-toggle">
+                            Våre tjenester
+                            <i class="dropdown-icon fas fa-chevron-down"></i>
+                        </a>
                         <div class="dropdown-content">
                             <a href="it-drift.html" class="dropdown-item">IT-drift</a>
                             <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>

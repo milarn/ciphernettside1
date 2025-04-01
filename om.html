@@ -223,9 +223,21 @@
       list-style: none;
     }
 
+    /* Mobile Navigation Fixes */
+    @media (max-width: 768px) {
+      .dropdown-toggle {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
     .nav-item {
       margin-left: 30px;
       position: relative;
+      display: flex;
+      align-items: center;
     }
 
     .nav-link {
@@ -242,7 +254,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background-color: var(--primary);
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
       transition: width 0.3s ease;
     }
 
@@ -267,49 +279,146 @@
       cursor: pointer;
       color: var(--white);
       font-size: 1.5rem;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      z-index: 101;
+      transition: all 0.3s ease;
+    }
+    
+    /* Menu Footer (Desktop hidden) */
+    .menu-footer {
+      display: none;
+    }
+
+    /* Hamburger icon with animated transition */
+    .hamburger-icon {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hamburger-icon .line {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      margin: 3px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .mobile-toggle.active .hamburger-icon .line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    
+    .mobile-toggle.active .hamburger-icon .line:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .mobile-toggle.active .hamburger-icon .line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
     }
 
     /* Dropdown Menu */
     .dropdown {
       position: relative;
     }
-
+    
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    
+    .dropdown-icon {
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+      margin-left: 3px;
+    }
+    
+    .dropdown.active .dropdown-icon {
+      transform: rotate(180deg);
+    }
+    
     .dropdown-content {
       position: absolute;
       top: 100%;
       left: 0;
       background-color: var(--secondary);
       min-width: 220px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      padding: 12px 0;
       opacity: 0;
       visibility: hidden;
       transform: translateY(10px);
       transition: all 0.3s ease;
-      z-index: 10;
-      padding: 10px 0;
+      z-index: 5;
       margin-top: 10px;
+      border: 1px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+      max-height: 0; /* Start with zero height for better animation */
     }
-
-    .dropdown:hover .dropdown-content,
+    
+    /* Desktop dropdown behavior */
+    @media (min-width: 769px) {
+      .dropdown:hover .dropdown-content,
+      .dropdown.hovered .dropdown-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        max-height: 500px;
+        padding: 12px 0;
+      }
+    }
+    
+    /* Mobile dropdown behavior - controlled by JS */
     .dropdown.active .dropdown-content {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-
+    
     .dropdown-item {
       display: block;
       padding: 12px 20px;
       color: var(--white);
       font-size: 0.95rem;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      position: relative;
     }
-
+    
+    .dropdown-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      transition: width 0.3s ease;
+      opacity: 0.8;
+    }
+    
     .dropdown-item:hover {
       background-color: var(--secondary-light);
-      color: var(--primary);
+      color: var(--white);
       padding-left: 25px;
+    }
+    
+    .dropdown-item:hover::before {
+      width: 3px;
+    }
+
+    .dropdown-item.active {
+      color: var(--primary);
+      background-color: rgba(245, 162, 140, 0.1);
     }
 
     /* Hero Section */
@@ -639,12 +748,15 @@
       width: 100%;
       height: 300px;
       overflow: hidden;
+      position: relative;
+      background-color: var(--secondary-light);
     }
 
     .team-member-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 30%;
       transition: transform 0.5s ease;
     }
 
@@ -883,6 +995,7 @@
     }
 
     /* Responsive Styles */
+    /* Tablet-optimalisering */
     @media (max-width: 992px) {
       h1, .hero-title {
         font-size: 2.8rem;
@@ -911,6 +1024,15 @@
       .values-blocks {
         grid-template-columns: repeat(2, 1fr);
       }
+      
+      /* Justert bildeposisjonering for tablets */
+      .team-member-image {
+        height: 280px;
+      }
+      
+      .team-member-image img {
+        object-position: center 20%;
+      }
 
       .values-row {
         flex-wrap: wrap;
@@ -938,41 +1060,89 @@
       }
       
       .mobile-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 98;
+      }
+      
+      .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
       }
       
       .nav-menu {
         position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 80%;
+        top: 0;
+        right: -100%;
+        width: 85%;
         height: 100vh;
-        background-color: var(--secondary);
+        background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
         flex-direction: column;
-        transition: all 0.4s ease;
-        padding: 40px;
-        z-index: 99;
+        transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        padding: 80px 30px 40px;
+        z-index: 100;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+        overflow-y: auto;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
       }
       
       .nav-menu.active {
-        left: 0;
-        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        right: 0;
       }
       
       .nav-list {
         flex-direction: column;
         width: 100%;
+        margin-bottom: 30px;
       }
       
       .nav-item {
-        margin: 0 0 20px;
+        margin: 0;
         width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
       
       .nav-link {
-        display: block;
-        padding: 10px 0;
-        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      
+      .nav-link:hover {
+        padding-left: 10px;
+        color: var(--primary);
+      }
+      
+      .nav-link::after {
+        display: none;
+      }
+      
+      .dropdown-toggle {
+        justify-content: space-between;
+        width: 100%;
+      }
+      
+      .dropdown-icon {
+        font-size: 1rem;
       }
       
       .header-cta {
@@ -982,32 +1152,94 @@
       
       .header-cta .btn {
         width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
       }
       
+      .header-cta .btn i {
+        margin-left: 10px;
+      }
+      
+      /* Menu Footer (Mobile only) */
+      .menu-footer {
+        display: block;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.9rem;
+      }
+      
+      .menu-contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      
+      .menu-contact-info a {
+        color: rgba(255, 255, 255, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+      
+      .menu-contact-info a i {
+        margin-right: 8px;
+        color: var(--primary);
+      }
+      
+      .menu-contact-info a:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+      
+      /* Mobile-Specific Dropdown Styles */
       .dropdown-content {
-          position: static;
-          background-color: rgba(255, 255, 255, 0.05);
-          box-shadow: none;
-          max-height: 0;
-          overflow: hidden;
-          padding: 0;
-          margin-top: 0;
-          border-radius: 0;
-          opacity: 1;
-          visibility: visible;
-          transform: none;
-          transition: max-height 0.3s ease, padding 0.3s ease;
+        position: static;
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: none;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        margin-top: 0;
+        border-radius: 8px;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+        border: none;
+        pointer-events: auto; /* Ensure clicks work on mobile */
       }
       
       .dropdown.active .dropdown-content {
-          max-height: 300px;
-          padding: 10px 0;
-          margin-top: 10px;
+        max-height: 400px;
+        padding: 10px 0;
+        margin-top: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       
       .dropdown-item {
-          padding: 10px 20px;
-          margin-left: 15px;
+        padding: 12px 20px;
+        margin-left: 0;
+        font-size: 1rem;
+        border-left: 3px solid transparent;
+      }
+      
+      .dropdown-item:hover {
+        border-left: 3px solid var(--primary);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      
+      .dropdown-item::before {
+        display: none;
       }
       
       .hero {
@@ -1043,6 +1275,30 @@
         grid-template-columns: 1fr;
       }
       
+      /* Justert bildeposisjonering for mobil */
+      .team-member-image {
+        height: 320px;
+      }
+      
+      .team-member-image img {
+        object-position: center 20%;
+        object-fit: cover;
+        max-height: 100%;
+      }
+      
+      /* Spesifikke justeringer for enkelte bilder med dårlig sentrering */
+      [alt="Kristi Skår"] {
+        object-position: center 15%;
+      }
+      
+      [alt="Kjell Gangdal"] {
+        object-position: center 15%;
+      }
+      
+      [alt="Thomas Abelsen"] {
+        object-position: center 15%;
+      }
+      
       .footer-grid {
         grid-template-columns: 1fr;
       }
@@ -1062,28 +1318,52 @@
           <img src="bilder/Cipher-logo-negativ+(3).png" alt="Cipher Logo">
         </a>
       </div>
-      <button class="mobile-toggle" id="menuToggle" aria-label="Åpne/lukke meny">
-        <i class="fas fa-bars"></i>
+      
+      <button class="mobile-toggle" id="menuToggle" aria-label="Menyknapp" aria-expanded="false">
+        <span class="hamburger-icon">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </span>
       </button>
-      <nav class="nav-menu">
+      
+      <!-- Dark overlay when menu is open -->
+      <div class="menu-overlay" id="menuOverlay"></div>
+      
+      <nav class="nav-menu" id="navMenu">
         <ul class="nav-list">
           <li class="nav-item"><a href="index.html" class="nav-link">Hjem</a></li>
           <li class="nav-item dropdown">
-            <a href="javascript:void(0)" class="nav-link dropdown-toggle">Våre tjenester <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i></a>
+            <a href="#" class="nav-link dropdown-toggle">
+              Våre tjenester
+              <i class="dropdown-icon fas fa-chevron-down"></i>
+            </a>
             <div class="dropdown-content">
               <a href="it-drift.html" class="dropdown-item">IT-drift</a>
+              <a href="m365.html" class="dropdown-item">Microsoft Intune & M365</a>
               <a href="sikkerhetstjenester.html" class="dropdown-item">Sikkerhetstjenester</a>
               <a href="skytjenester.html" class="dropdown-item">Skytjenester</a>
               <a href="innsiktoganalyse.html" class="dropdown-item">Innsikt og analyse</a>
               <a href="strategisk-it-radgivning.html" class="dropdown-item">Strategisk IT-rådgivning</a>
               <a href="devops-monitorering.html" class="dropdown-item">DevOps-monitorering</a>
+              <a href="doku.html" class="dropdown-item">Dokumentasjon as a Service</a>
             </div>
           </li>
           <li class="nav-item"><a href="om.html" class="nav-link active">Om oss</a></li>
           <li class="nav-item"><a href="kontakt.html" class="nav-link">Kontakt</a></li>
           <li class="nav-item"><a href="kontakt.html#karriere" class="nav-link">Karriere</a></li>
         </ul>
+        
         <a href="kontakt.html" class="btn btn-primary header-cta">Kontakt oss</a>
+        
+        <!-- Mobile-only footer with contact info -->
+        <div class="menu-footer">
+          <div class="menu-contact-info">
+            <a href="tel:+4756123465"><i class="fas fa-phone"></i> +47 56 12 34 65</a>
+            <a href="mailto:hi@cipher.no"><i class="fas fa-envelope"></i> hi@cipher.no</a>
+          </div>
+          <p>&copy; 2025 Cipher Norge AS</p>
+        </div>
       </nav>
     </div>
   </header>
@@ -1263,7 +1543,7 @@
           <!-- Team Member 4 -->
           <div class="team-member">
             <div class="team-member-image">
-              <img src="bilder/Dante.png" alt="Dante Strømsnes Romero">
+              <img src="bilder\Dante (1).png" alt="Dante Strømsnes Romero">
             </div>
             <div class="team-member-info">
               <h3 class="team-member-name">Dante Strømsnes Romero</h3>
@@ -1602,16 +1882,30 @@
   <!-- JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Mobile Menu Toggle
+      // Check device size
+      const isMobile = () => window.innerWidth <= 768;
       const menuToggle = document.getElementById('menuToggle');
-      const navMenu = document.querySelector('.nav-menu');
+      const navMenu = document.getElementById('navMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
       
-      menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent event from bubbling up to document
+      // Toggle menu function
+      const toggleMenu = () => {
         navMenu.classList.toggle('active');
-        menuToggle.innerHTML = navMenu.classList.contains('active') ? 
-          '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-      });
+        menuOverlay.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        
+        const isExpanded = navMenu.classList.contains('active');
+        menuToggle.setAttribute('aria-expanded', isExpanded);
+        
+        // Prevent body scrolling when menu is open
+        document.body.style.overflow = isExpanded ? 'hidden' : '';
+      };
+      
+      // Open/close menu when clicking hamburger icon
+      menuToggle.addEventListener('click', toggleMenu);
+      
+      // Close menu when clicking on overlay
+      menuOverlay.addEventListener('click', toggleMenu);
       
       // Sticky Header
       window.addEventListener('scroll', () => {
@@ -1623,24 +1917,70 @@
         }
       });
       
-      // Mobile Dropdown Toggle
+      // Dropdown Functionality
       const dropdowns = document.querySelectorAll('.dropdown');
       
-      dropdowns.forEach(dropdown => {
-        const link = dropdown.querySelector('.nav-link');
+      // Function to handle clicks on dropdown toggles
+      const handleDropdownToggle = (dropdown, link, e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Prevent event from bubbling up
+        dropdown.classList.toggle('active');
         
+        // Toggle aria-expanded for accessibility
+        const isExpanded = dropdown.classList.contains('active');
+        link.setAttribute('aria-expanded', isExpanded);
+        
+        // Close other dropdowns
+        dropdowns.forEach(otherDropdown => {
+          if (otherDropdown !== dropdown) {
+            otherDropdown.classList.remove('active');
+            const otherToggle = otherDropdown.querySelector('.dropdown-toggle');
+            if (otherToggle) {
+              otherToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      };
+      
+      // Handle click and hover events for dropdowns
+      dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('.dropdown-toggle');
+        
+        if (!link) return;
+        
+        // On mobile: handle click events
         link.addEventListener('click', (e) => {
-          if (window.innerWidth <= 768) {
+          if (isMobile()) {
+            handleDropdownToggle(dropdown, link, e);
+          } else {
+            // On desktop: prevent default action if clicking main navigation items with dropdowns
             e.preventDefault();
-            e.stopPropagation(); // Prevent event from bubbling up
-            dropdown.classList.toggle('active');
-            
-            // Close other dropdowns
-            dropdowns.forEach(otherDropdown => {
-              if (otherDropdown !== dropdown) {
-                otherDropdown.classList.remove('active');
-              }
+          }
+        });
+        
+        // Mouse enter/leave events for desktop
+        const setupHoverEvents = () => {
+          if (!isMobile()) {
+            dropdown.addEventListener('mouseenter', () => {
+              dropdown.classList.add('hovered');
+              link.setAttribute('aria-expanded', 'true');
             });
+            
+            dropdown.addEventListener('mouseleave', () => {
+              dropdown.classList.remove('hovered');
+              link.setAttribute('aria-expanded', 'false');
+            });
+          }
+        };
+        
+        // Initialize hover events
+        setupHoverEvents();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          if (isMobile()) {
+            // Reset any desktop-specific states when switching to mobile
+            dropdown.classList.remove('hovered');
           }
         });
       });
@@ -1649,8 +1989,17 @@
       document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
           navMenu.classList.remove('active');
-          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-          dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+          menuToggle.classList.remove('active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+            const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+            if (dropdownToggle) {
+              dropdownToggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+          document.body.style.overflow = '';
+          menuOverlay.classList.remove('active');
         }
       });
       
@@ -1666,7 +2015,7 @@
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           const targetId = this.getAttribute('href');
-          if (targetId === '#' || targetId === 'javascript:void(0)') return;
+          if (targetId === '#') return;
           
           const targetElement = document.querySelector(targetId);
           if (!targetElement) return;
@@ -1675,7 +2024,10 @@
           
           if (navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            menuToggle.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            menuOverlay.classList.remove('active');
           }
           
           const headerHeight = document.getElementById('header').offsetHeight;
